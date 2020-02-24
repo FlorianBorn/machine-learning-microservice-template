@@ -1,5 +1,5 @@
 import pandas as pd
-from microservice.meta_data import target_label
+from microservice.config import target_label
 from sklearn.preprocessing import LabelEncoder
 from typing import Tuple
 
@@ -58,26 +58,26 @@ class Preprocessor():
         processed_y = pd.DataFrame(processed_y, columns=['target'])
         return processed_y    
 
-    def process_raw(self, X: pd.DataFrame, y: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        '''
-        input: 
-            takes a complete DataFrame from the Datapipeline as Input
-        return:
-            preprocessed data splitted into X and y (to use for training the model)
-        '''
+    # def process_raw(self, X: pd.DataFrame, y: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    #     '''
+    #     input: 
+    #         takes a complete DataFrame from the Datapipeline as Input
+    #     return:
+    #         preprocessed data splitted into X and y (to use for training the model)
+    #     '''
         
-        X = data.drop(target_label, axis=1)
-        y = self.le.fit_transform(data[target_label])
-        y = pd.DataFrame(y, columns=['target'])
-        return X, y
+    #     X = data.drop(target_label, axis=1)
+    #     y = self.le.fit_transform(data[target_label])
+    #     y = pd.DataFrame(y, columns=['target'])
+    #     return X, y
     
-    def process_inference(self, X: pd.DataFrame) -> pd.DataFrame:
-        '''
-        input: 
-            takes a DataFrame containing only Features for prediction
-        return:
-            preprocessed X to feed into the trained model
-        '''
-        processed_X = X
-        return processed_X
+    # def process_inference(self, X: pd.DataFrame) -> pd.DataFrame:
+    #     '''
+    #     input: 
+    #         takes a DataFrame containing only Features for prediction
+    #     return:
+    #         preprocessed X to feed into the trained model
+    #     '''
+    #     processed_X = X
+    #     return processed_X
 
