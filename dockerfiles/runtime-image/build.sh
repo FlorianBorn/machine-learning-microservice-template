@@ -1,1 +1,1 @@
-docker build -t runtime_environment ../
+docker build -t runtime_environment ../n
