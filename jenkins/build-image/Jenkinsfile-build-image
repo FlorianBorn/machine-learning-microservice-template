@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage("Train Model") {
+
+        }
+        stage("Test Model") {
+
+        }
+        stage("Update Meta Data") {
+            
+        }
+        stage("Push Model") {
+
+        }
+    }
+}
