@@ -2,13 +2,19 @@ pipeline {
     agent any
     stages {
         stage("Train Model") {
-            sh "echo Train Model!"
+            steps {
+                sh "echo Train Model!"
+            }
         }
         stage("Test Model") {
-            sh "echo Test Model!"
+            steps {
+               sh "echo Test Model!"
+            }
         }
         stage("Push Model") {
-            sh "echo Push Model!"
+            steps {
+                sh "echo Push Model!"
+            }
         }
     }
 }
