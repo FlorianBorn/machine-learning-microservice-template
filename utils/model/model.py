@@ -26,12 +26,14 @@ class Model():
         input:
 
         '''
+        # preprocessing
         X, y = self.preprocessor.split_X_y(raw_data)
         self.preprocessor.fit_X(X)
         self.preprocessor.fit_y(y)
         processed_X = self.preprocessor.process_X(X)
         processed_y = self.preprocessor.process_y(y)
 
+        # fitting
         self.model = train_model(processed_X, processed_y)
         self.classes = [str(c) for c in self.model.classes_] # set classes; classes are needed later while predicting probabilities
 

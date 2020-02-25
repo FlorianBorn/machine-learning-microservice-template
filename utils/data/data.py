@@ -8,7 +8,7 @@ def load_data() -> pd.DataFrame:
     Ideally, this is the only 'data'-function needed by the data scientist.
 
     returns:
-        a dataframe containing all data and the target
+        a dataframe containing all features and the target
     '''
     df_data = sns.load_dataset('iris')
 
