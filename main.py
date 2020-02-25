@@ -1,10 +1,10 @@
 # from https://fastapi.tiangolo.com/tutorial/first-steps/
 from typing import List
 import sys
-sys.path.append("microservice")
+sys.path.append("utils")
 from fastapi import FastAPI
 from pydantic import BaseModel
-from microservice.model.model import Model
+from utils.model.model import Model
 import pandas as pd
 import pickle as pkl
 
