@@ -1,6 +1,6 @@
-node {
-    config = readYaml(file: "jenkins/config.yaml")
-}
+// node {
+//     config = readYaml(file: "jenkins/config.yaml")
+// }
 
 pipeline {
     agent any
@@ -12,6 +12,7 @@ pipeline {
                 }
             }
             steps {
+                config = readYaml(file: "jenkins/config.yaml")
                 sh "echo Train Model!"
                 dir("jenkins/train-model") {
                     sh "python3 train.py"
