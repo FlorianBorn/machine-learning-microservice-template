@@ -12,7 +12,10 @@ pipeline {
                 }
             }
             steps {
-                config = readYaml(file: "jenkins/config.yaml")
+                script {
+                    config = readYaml(file: "jenkins/config.yaml")
+                }
+                
                 sh "echo Train Model!"
                 dir("jenkins/train-model") {
                     sh "python3 train.py"
