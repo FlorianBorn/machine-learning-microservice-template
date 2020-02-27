@@ -7,7 +7,9 @@ pipeline {
     stages {
         stage("Train Model") {
             agent {
-                image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
+                docker {
+                    image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
+                }
             }
             steps {
                 sh "echo Train Model!"
