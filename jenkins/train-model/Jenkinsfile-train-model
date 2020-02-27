@@ -1,5 +1,5 @@
 node {
-    config = readYaml(file: "/jenkins/config.yaml")
+    config = readYaml(file: "jenkins/config.yaml")
 }
 
 pipeline {
