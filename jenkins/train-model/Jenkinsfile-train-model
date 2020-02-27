@@ -1,9 +1,20 @@
+node {
+    config = readYaml(file: "../config.yaml")
+}
+
 pipeline {
     agent any
     stages {
         stage("Train Model") {
+            agent {
+                image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
+            }
             steps {
                 sh "echo Train Model!"
+                dir("jenkins/train-model") {
+                    sh "python3 train.py"
+                }
+                
             }
         }
         stage("Test Model") {
