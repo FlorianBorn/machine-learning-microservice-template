@@ -13,7 +13,7 @@ pipeline {
             }
             steps {
                 script {
-                    config = readYaml(file: "jenkins/config.yaml")
+                    def config = readYaml(file: "jenkins/config.yaml")
                 }
                 
                 sh "echo Train Model!"
