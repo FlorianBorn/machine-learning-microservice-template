@@ -5,17 +5,16 @@
 pipeline {
     agent any
     stages {
+        script {
+                    def config = readYaml(file: "jenkins/config.yaml")
+                }
         stage("Train Model") {
             agent {
                 docker {
                     image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
                 }
             }
-            steps {
-                script {
-                    def config = readYaml(file: "jenkins/config.yaml")
-                }
-                
+            steps {                
                 sh "echo Train Model!"
                 dir("jenkins/train-model") {
                     sh "python3 train.py"
