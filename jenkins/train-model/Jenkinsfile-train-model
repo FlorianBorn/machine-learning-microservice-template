@@ -1,13 +1,13 @@
-// node {
-//     config = readYaml(file: "jenkins/config.yaml")
-// }
+node {
+    config = readYaml(file: "jenkins/config.yaml")
+}
 
 pipeline {
     agent any
     stages {
-        script {
-                    def config = readYaml(file: "jenkins/config.yaml")
-                }
+        // script {
+        //             def config = readYaml(file: "jenkins/config.yaml")
+        //         }
         stage("Train Model") {
             agent {
                 docker {
