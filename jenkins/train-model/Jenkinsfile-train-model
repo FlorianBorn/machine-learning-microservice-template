@@ -1,4 +1,5 @@
 node {
+    checkout scm
     config = readYaml(file: "jenkins/config.yaml")
     sh(script: "echo hello from node")
 }
