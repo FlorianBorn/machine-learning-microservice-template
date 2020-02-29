@@ -5,8 +5,13 @@ node {
         sh(script: "echo hello from node")
         sh(script: "echo ${env}")
 
+        docker.withRegistry
+
         // list all env variables 
-        echo sh(script: 'env|sort', returnStdout: true)
+        sh(script: 'env|sort', returnStdout: true)
+
+        sh "/bin/bash jenkins/train-model/dummy.sh"
+
     }
 
 }
