@@ -1,3 +1,39 @@
 node {
     config = readYaml(file: "../config.yaml")
 }
+
+pipeline {
+    agent any
+    stages {
+        stage("Build Image") {
+            agent {
+                docker {
+                    image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
+                }
+            }
+            steps {                
+                sh "echo Train Model!"
+                dir("jenkins/build-image") {
+                    // ToDo
+                }
+                
+            }
+        }
+        stage("Test Image") {
+            steps {
+               sh "echo Test Model!"
+                dir("jenkins/build-image") {
+                    // ToDo
+                }
+            }
+        }
+        stage("Push Image") {
+            steps {
+                sh "echo Push Model!"
+                dir("jenkins/build-image") {
+                    // ToDo
+                }                
+            }
+        }
+    }
+}

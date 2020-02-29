@@ -2,4 +2,6 @@
 repository: n02291
 runtime_image_name: ml_template_runtime_env
 tag: 0.0.1
+
+docker_socket_path: "/var/run/docker.sock" # default linux path
 ...

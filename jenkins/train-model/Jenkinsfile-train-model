@@ -9,6 +9,7 @@ pipeline {
             agent {
                 docker {
                     image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
+                    args "-v ${config.doocker_socket_path}:${config.docker_socker_path}"
                 }
             }
             steps {                
@@ -22,11 +23,17 @@ pipeline {
         stage("Test Model") {
             steps {
                sh "echo Test Model!"
+                dir("jenkins/train-model") {
+                    sh "python3 test.py"
+                }
             }
         }
         stage("Push Model") {
             steps {
                 sh "echo Push Model!"
+                dir("jenkins/train-model") {
+                    sh "push.sh"
+                }                
             }
         }
     }
