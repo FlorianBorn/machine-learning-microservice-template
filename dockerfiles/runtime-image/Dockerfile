@@ -1,23 +1,12 @@
-FROM ubuntu:18.04
+FROM python:3.8.2-slim
 
-RUN apt-get update && apt-get install \
-    build-essential \
-    checkinstall \
-    libreadline-gplv2-dev \
-    libncursesw5-dev \
-    libssl-dev \
-    libsqlite3-dev \
-    tk-dev \
-    libgdbm-dev \
-    libc6-dev \
-    libbz2-dev \
-    libffi-dev \
-    zlib1g-dev 
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+	wget \
+	curl \
+	gcc \
+    && rm -rf /var/lib/apt/lists/*    
 
-WORKDIR /opt
+COPY requirements.txt /microservice/requirements.txt
 
-RUN wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz && tar xzf Python-3.8.1.tgz
+RUN pip install -r /microservice/requirements.txt
 
-WORKDIR Python-3.8.1
-
-RUN ./configure --enable-optimizations && make altinstall
