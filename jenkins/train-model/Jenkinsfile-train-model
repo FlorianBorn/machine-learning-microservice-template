@@ -4,6 +4,9 @@ node {
         config = readYaml(file: "jenkins/config.yaml")
         sh(script: "echo hello from node")
         sh(script: "echo ${env}")
+
+        // list all env variables 
+        echo sh(script: 'env|sort', returnStdout: true)
     }
 
 }
