@@ -12,6 +12,8 @@ node {
 
         sh "/bin/bash jenkins/train-model/dummy.sh"
 
+        sh "whoami"
+
         withDockerContainer(image: 'n02291/ml_template_runtime_env:0.0.1') {
             sh "echo hello from container!"
         }
