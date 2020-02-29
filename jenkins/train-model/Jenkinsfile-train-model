@@ -5,7 +5,7 @@ node {
         sh(script: "echo hello from node")
         sh(script: "echo ${env}")
 
-        docker.withRegistry
+        //docker.withRegistry
 
         // list all env variables 
         sh(script: 'env|sort', returnStdout: true)
