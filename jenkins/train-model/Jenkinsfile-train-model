@@ -1,7 +1,11 @@
 node {
-    checkout(scm)
-    config = readYaml(file: "jenkins/config.yaml")
-    sh(script: "echo hello from node")
+    stage('example') {
+        checkout(scm)
+        config = readYaml(file: "jenkins/config.yaml")
+        sh(script: "echo hello from node")
+        sh(script: "echo ${env}")
+    }
+
 }
 
 // pipeline {
