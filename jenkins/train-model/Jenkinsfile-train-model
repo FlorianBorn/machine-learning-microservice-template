@@ -14,7 +14,7 @@ node {
 
         sh "whoami"
 
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}") {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}", args="-u 0:0") {
             sh "echo hello from container!"
         }
 
