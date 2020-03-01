@@ -10,3 +10,7 @@ COPY requirements.txt /microservice/requirements.txt
 
 RUN pip install -r /microservice/requirements.txt
 
+ARG docker_gid
+
+RUN groupadd -g $docker_gid docker
+

@@ -14,7 +14,7 @@ node {
 
         sh "whoami"
 
-        withDockerContainer(image: 'n02291/ml_template_runtime_env:0.0.1') {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}") {
             sh "echo hello from container!"
         }
 
