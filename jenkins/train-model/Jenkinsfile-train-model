@@ -36,7 +36,7 @@ node {
         sh "echo Pushing the Model!"
         checkout scm "${env.BRANCH_NAME}"
         unstash(name: "model")
-        git status
+        sh "git status"
     }
 }
 
