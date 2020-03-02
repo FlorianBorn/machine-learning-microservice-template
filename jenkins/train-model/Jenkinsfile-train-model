@@ -36,7 +36,8 @@ node {
         sh "echo Pushing the Model!"
         checkout scm "${env.BRANCH_NAME}"
         unstash(name: "model")
-        sh "git status"
+        sh "git commit -am 'feat: re-train model (by jenkins)'"
+        sh "git push origin/${env.BRANCH_NAME}"
     }
 }
 
