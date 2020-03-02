@@ -1,5 +1,5 @@
 node {
-    stage('example') {
+    stage('Train Model') {
         checkout(scm)
         config = readYaml(file: "jenkins/config.yaml")
         sh(script: "echo hello from node")
@@ -21,9 +21,20 @@ node {
             }
             stash(name: "model", includes: "${config.model_path}/${config.model_name}")
         }
-
     }
 
+    stage('Test Model') {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}" ) {
+            unstash(name: "model")
+            dir("jenkins/train-model") {
+                sh "python3 test.py"
+            }
+        }
+    }
+
+    stage('Push Model') {
+        sh "Pushing the Model!"
+    }
 }
 
 // pipeline {
