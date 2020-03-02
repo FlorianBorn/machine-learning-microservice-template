@@ -4,4 +4,6 @@ runtime_image_name: ml_template_runtime_env
 tag: 0.1.0
 
 docker_socket_path: "/var/run/docker.sock" # default linux path
+model_path: "model_bin/"
+model_name: "model.pkl"
 ...

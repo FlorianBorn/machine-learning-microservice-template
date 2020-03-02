@@ -19,6 +19,7 @@ node {
             dir("jenkins/train-model") {
                 sh "python3 train.py"
             }
+            stash(name: "model", includes: "${config.model_path}/${config.model_name}")
         }
 
     }
