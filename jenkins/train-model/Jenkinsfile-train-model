@@ -34,7 +34,7 @@ node {
 
     stage('Push Model') {
         sh "echo Pushing the Model!"
-        git checkout "${env.BRANCH_NAME}"
+        scm checkout "${env.BRANCH_NAME}"
         unstash(name: "model")
         git status
     }
