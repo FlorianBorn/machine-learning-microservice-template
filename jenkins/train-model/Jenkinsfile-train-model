@@ -38,6 +38,8 @@ node {
             sh "echo ${USERNAME}"
             //checkout scm "${env.BRANCH_NAME}"
             unstash(name: "model")
+            sh "git config --global user.name 'jenkins'"
+            sh "git config --global user.email 'jenkins@localhost'"
             sh "git commit -am 'feat: re-train model (by jenkins)'"
             sh "git push origin/${env.BRANCH_NAME}"
         }
