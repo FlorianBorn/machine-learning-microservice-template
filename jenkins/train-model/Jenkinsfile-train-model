@@ -34,7 +34,9 @@ node {
 
     stage('Push Model') {
         sh "echo Pushing the Model!"
-        //withCredentials
+        withCredentials([usernamePassword(credentialsId: "github" , usernameVariable: "USERNAME" , passwordVariable: "PASSWORD" )]) {
+            sh "echo ${USERNAME}"
+        }
         checkout scm "${env.BRANCH_NAME}"
         unstash(name: "model")
         sh "git commit -am 'feat: re-train model (by jenkins)'"
