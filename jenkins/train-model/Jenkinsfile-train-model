@@ -34,7 +34,7 @@ node {
 
     stage('Push Model') {
         sh "echo Pushing the Model!"
-        withCredentials
+        //withCredentials
         checkout scm "${env.BRANCH_NAME}"
         unstash(name: "model")
         sh "git commit -am 'feat: re-train model (by jenkins)'"
