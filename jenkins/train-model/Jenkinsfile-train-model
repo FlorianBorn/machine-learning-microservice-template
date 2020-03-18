@@ -45,10 +45,10 @@ node {
             sh "git commit -am 'feat: re-train model (by jenkins)'"
 
             sh "git checkout ${BRANCH_NAME}" // solves: fatal: You are not currently on a branch.
-
             sh "echo ${config.github_project_name}"
             sh "echo ${config}"
             sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${config.github_project_name}.git" // solves: fatal: could not read Username for 'https://github.com': No such device or address 
+            sh "git pull"    // solves: error: failed to push some refs to  ...
             sh "git push origin ${env.BRANCH_NAME}"
         }
         
