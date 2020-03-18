@@ -1,10 +1,10 @@
 node {
-
+    checkout(scm)
     config = readYaml(file: "jenkins/config.yaml")
     sh "echo ${config}"
 
     stage('Train Model') {
-        checkout(scm)
+
         sh(script: "echo hello from node")
         sh(script: "echo ${env}")
 
