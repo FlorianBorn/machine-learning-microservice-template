@@ -39,16 +39,17 @@ node {
         withCredentials([usernamePassword(credentialsId: "github" , usernameVariable: "USERNAME" , passwordVariable: "PASSWORD" )]) {
             sh "echo ${USERNAME}"
             //checkout scm "${env.BRANCH_NAME}"
-            unstash(name: "model")
+            
             sh "git config --global user.name 'jenkins'"
             sh "git config --global user.email 'jenkins@localhost'"
-            sh "git commit -am 'feat: re-train model (by jenkins)'"
 
             sh "git checkout ${BRANCH_NAME}" // solves: fatal: You are not currently on a branch.
             sh "echo ${config.github_project_name}"
             sh "echo ${config}"
             sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${config.github_project_name}.git" // solves: fatal: could not read Username for 'https://github.com': No such device or address 
             sh "git pull"    // solves: error: failed to push some refs to  ...
+            unstash(name: "model")
+            sh "git commit -am 'feat: re-train model (by jenkins)'"
             sh "git push origin ${env.BRANCH_NAME}"
         }
         
