@@ -1,7 +1,6 @@
 node {
     checkout(scm)
     config = readYaml(file: "jenkins/config.yaml")
-    sh "echo ${config}"
 
     stage('Train Model') {
 
@@ -49,7 +48,7 @@ node {
 
             sh "echo ${config.github_project_name}"
             sh "echo ${config}"
-            sh "git remote add origin https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${config.github_project_name}.git" // solves: fatal: could not read Username for 'https://github.com': No such device or address 
+            //sh "git remote add origin https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${config.github_project_name}.git" // solves: fatal: could not read Username for 'https://github.com': No such device or address 
             sh "git push origin ${env.BRANCH_NAME}"
         }
         
