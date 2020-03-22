@@ -3,12 +3,9 @@ node {
     config = readYaml(file: "jenkins/config.yaml")
 
     stage("Lint Dockerfile") {
-        steps {
-            dir("dockerfiles/production-image") {
-                sh "docker run --rm -i hadolint/hadolint < Dockerfile"
-            }
+        dir("dockerfiles/production-image") {
+            sh "docker run --rm -i hadolint/hadolint < Dockerfile"
         }
-
     }
 
     // stage("Build Image") {
