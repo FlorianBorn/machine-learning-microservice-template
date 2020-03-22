@@ -1,6 +1,7 @@
 node {
-    config = readYaml(file: "../config.yaml")
-    agent any
+    checkout(scm)
+    config = readYaml(file: "jenkins/config.yaml")
+
     stages {
         stage("Lint Dockerfile") {
             steps {
