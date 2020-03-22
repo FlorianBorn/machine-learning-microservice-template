@@ -6,9 +6,12 @@ pipeline {
     agent any
     stages {
         stage("Lint Dockerfile") {
-            dir("dockerfiles/production-image") {
-                sh "docker run --rm -i hadolint/hadolint < Dockerfile"
+            steps {
+                dir("dockerfiles/production-image") {
+                    sh "docker run --rm -i hadolint/hadolint < Dockerfile"
+                }
             }
+
         }
 
         // stage("Build Image") {
