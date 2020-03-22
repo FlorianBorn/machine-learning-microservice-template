@@ -1,8 +1,5 @@
 node {
     config = readYaml(file: "../config.yaml")
-}
-
-pipeline {
     agent any
     stages {
         stage("Lint Dockerfile") {
