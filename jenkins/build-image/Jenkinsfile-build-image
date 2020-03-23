@@ -19,7 +19,7 @@ node {
         dir("jenkins/build-image") {
             sh "./build.sh ${config.production_image_name} ${config.production_tag}"
         }
-            
+    }s    
     //     }
     // }
     // stage("Test Image") {
