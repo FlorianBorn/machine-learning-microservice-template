@@ -3,7 +3,10 @@ node {
     config = readYaml(file: "jenkins/config.yaml")
 
     stage("Lint Webservice") {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}", args: "-u 0:0") {
             sh "pylint main.py"
+        }
+
     }
 
     stage("Lint Dockerfile") {
