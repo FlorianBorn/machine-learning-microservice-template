@@ -16,9 +16,7 @@ node {
 
     stage("Build Image") {       
         sh "echo Build Image"
-        dir("jenkins/build-image") {
-            sh "./build.sh ${config.production_image_name} ${config.production_tag}"
-        }
+        sh "jenkins/build-image/build.sh ${config.production_image_name} ${config.production_tag}"
     }s    
     //     }
     // }
