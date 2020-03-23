@@ -2,6 +2,10 @@ node {
     checkout(scm)
     config = readYaml(file: "jenkins/config.yaml")
 
+    stage("Lint Webservice") {
+            sh "pylint main.py"
+    }
+
     stage("Lint Dockerfile") {
         dir("dockerfiles/production-image") {
             sh "docker run --rm -i hadolint/hadolint < Dockerfile"
