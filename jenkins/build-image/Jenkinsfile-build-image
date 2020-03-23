@@ -4,7 +4,7 @@ node {
 
     stage("Lint Webservice") {
         withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}", args: "-u 0:0") {
-            sh "pylint --exit-zero --extension-pkg-whitelist=pydantic main.py"
+            sh "pylint --exit-zero --extension-pkg-whitelist=pydantic main.py" // --exit-zero returns always 0
         }
     }
 
