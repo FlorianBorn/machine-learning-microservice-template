@@ -14,17 +14,11 @@ node {
         }
     }
 
-    // stage("Build Image") {
-    //     agent {
-    //         docker {
-    //             image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
-    //         }
-    //     }
-    //     steps {                
-    //         sh "echo Build Image"
-    //         dir("jenkins/build-image") {
-    //             // ToDo
-    //         }
+    stage("Build Image") {       
+        sh "echo Build Image"
+        dir("jenkins/build-image") {
+            sh "./build.sh ${config.production_image_name} ${config.production_tag}"
+        }
             
     //     }
     // }
