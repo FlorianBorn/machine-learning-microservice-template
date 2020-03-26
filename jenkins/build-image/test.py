@@ -12,6 +12,7 @@ from pathlib import Path
 # ...
 
 project_root = sys.path.append(Path(__file__).resolve().parents[2])
+print(project_root)
 
 # get CMD args
 parser = argparse.ArgumentParser()
@@ -33,9 +34,13 @@ params1 = {
 
 container = client.containers.run(**params1)
 container.reload() 
+ip_addr = container.attrs['NetworkSettings']['IPAddress']
+print("Container IP: {}".format(ip_addr))
 
+container_stop()
 ## Run the test
 
+requests.post()
 
 }
 print(container)
