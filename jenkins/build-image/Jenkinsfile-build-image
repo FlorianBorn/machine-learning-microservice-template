@@ -17,7 +17,7 @@ node {
     stage("Build Image") {       
         sh "echo Build Image"
         sh "jenkins/build-image/build.sh ${config.production_image_name} ${config.production_tag}"
-    }s    
+    }    
     //     }
     // }
     // stage("Test Image") {

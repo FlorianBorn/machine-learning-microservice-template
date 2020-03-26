@@ -1,6 +1,6 @@
 # Template Imports
 import sys
-sys.path.append("../../")
+sys.path.append("../../") # project's root
 import logging
 
 from utils.model.model import Model
