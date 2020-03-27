@@ -21,6 +21,7 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
 logging.info("Start Container Tests!")
 
 test_file = "classification1.json" # rename if neccassary
+test_subfolder = "api-classification-request"
 endpoint = "/api/predictions"
 schema = "http" # change if neccessary
 host_port = 45000
@@ -56,7 +57,7 @@ status_code = 0
 time.sleep(3)
 for i in range(n_retry):
         try:
-                with open(str(project_root / "tests" / "api-classification-request" / test_file), "rb") as fp:
+                with open(str(project_root / "tests" / test_subfolder / test_file), "rb") as fp:
                         test_req = json.load(fp)
                         logging.debug(f"Test Payload: {test_req}")
                 response = requests.post(url=f"{schema}://{ip_addr}:{container_port}{endpoint}", json=test_req)

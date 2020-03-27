@@ -18,16 +18,14 @@ node {
         sh "echo Build Image"
         sh "jenkins/build-image/build.sh ${config.production_image_name} ${config.production_tag}"
     }    
-    //     }
-    // }
-    // stage("Test Image") {
-    //     steps {
-    //        sh "echo Test Model!"
-    //         dir("jenkins/build-image") {
-    //             // ToDo
-    //         }
-    //     }
-    // }
+
+    stage("Test Image") {
+        sh "echo Build the Production Image!"
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_tag}", args: "-u 0:0") {
+            sh "python jenkins/build-image/test.py"
+        }
+
+    }
     // stage("Push Image") {
     //     steps {
     //         sh "echo Push Model!"
