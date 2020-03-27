@@ -14,7 +14,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
 COPY requirements.txt /microservice/requirements.txt
 
 RUN pip install -r /microservice/requirements.txt
-RUN pip install pylint
+RUN pip install pylint docker
+
 
 
 
