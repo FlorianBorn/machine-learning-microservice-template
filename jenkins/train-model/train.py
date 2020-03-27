@@ -3,8 +3,8 @@ import sys
 sys.path.append("../../")
 import logging
 
-from utils.model.model import Model
-from utils.data.data import DataLoader
+from utils.model.mdl import Model
+from utils.data.data_loader import DataLoader
 
 # Custom Imports
 # ...
