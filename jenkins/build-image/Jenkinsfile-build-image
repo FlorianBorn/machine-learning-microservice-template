@@ -21,7 +21,7 @@ node {
 
     stage("Test Image") {
         sh "echo Build the Production Image!"
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime__image_tag}", args: "-u 0:0 -v /var/run/docker.sock:/var/run/docker.sock") {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0 -v /var/run/docker.sock:/var/run/docker.sock") {
             sh "python3 jenkins/build-image/test.py ${config.production_image_name} ${config.production_image_tag}"
         }
     }
