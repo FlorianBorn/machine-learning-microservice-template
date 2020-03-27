@@ -2,7 +2,7 @@
 repository: n02291 # Docker
 
 runtime_image_name: ml_template_runtime_env
-runtime_tag: 0.1.0
+runtime_tag: 0.2.0
 
 production_image_name: ml_template_production_env
 production_tag: 0.0.1
