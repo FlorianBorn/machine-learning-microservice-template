@@ -9,7 +9,7 @@ node {
         // list all env variables 
         sh(script: 'env|sort', returnStdout: true)
 
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}", args: "-u 0:0") {
+        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {
             sh "echo hello from container!"
             dir("jenkins/train-model") {
                 sh "python3 train.py"

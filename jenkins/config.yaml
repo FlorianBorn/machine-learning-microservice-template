@@ -2,10 +2,10 @@
 repository: n02291 # Docker
 
 runtime_image_name: ml_template_runtime_env
-runtime_tag: 0.2.0
+runtime_image_tag: 0.2.0
 
 production_image_name: ml_template_production_env
-production_tag: 0.0.1
+production_image_tag: 0.0.1
 
 docker_socket_path: "/var/run/docker.sock" # default linux path
 model_path: "model_bin"
