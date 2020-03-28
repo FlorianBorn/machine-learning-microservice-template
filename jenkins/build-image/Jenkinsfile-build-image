@@ -28,6 +28,8 @@ node {
  
     stage("Push Image") {
         sh "echo Push Model!"
-        sh "jenkins/build-image/push.sh ${config.production_image_name} ${config.production_image_tag} ${config.repository}"               
+        withDockerRegistry(credentialsId: "docker") {
+            sh "jenkins/build-image/push.sh ${config.production_image_name} ${config.production_image_tag} ${config.repository}"     
+        }
     }
 }
