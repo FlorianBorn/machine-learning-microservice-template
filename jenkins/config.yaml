@@ -1,5 +1,7 @@
 ---
 repository: n02291 # Docker
+registry: https://index.docker.io/v1/
+docker_credentials_id: docker
 
 runtime_image_name: ml_template_runtime_env
 runtime_image_tag: 0.2.0
