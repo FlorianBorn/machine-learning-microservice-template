@@ -28,7 +28,7 @@ node {
  
     stage("Push Image") {
         sh "echo Push Model!"
-        withDockerRegistry(registry: ${config.registry} credentialsId: ${config.docker_credentials_id}) {
+        withDockerRegistry(registry: "${config.registry}" credentialsId: "${config.docker_credentials_id}") {
             sh "jenkins/build-image/push.sh ${config.production_image_name} ${config.production_image_tag} ${config.repository}"     
         }
     }
