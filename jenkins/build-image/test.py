@@ -69,7 +69,6 @@ for i in range(n_retry):
                         container.stop()
                         raise
                 time.sleep(3)
-                pass
 
 # exit & clean up
 container.stop()
