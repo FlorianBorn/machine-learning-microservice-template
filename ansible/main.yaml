@@ -1,0 +1,11 @@
+- name: dummy
+  vars:
+    ansible_ssh_pass: 0000 
+#  become: true
+  hosts: k8s
+  tasks:
+    - name: install microk8s
+      snap:
+        name: microk8s
+        classic: yes
+        channel: "1.18/stable"
