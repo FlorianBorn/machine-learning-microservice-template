@@ -2,6 +2,7 @@
   vars:
     ansible_ssh_pass: 0000 
     ansible_sudo_pass: 0000
+    ansible_become_password: 0000
 #  become: true
   hosts: k8s
   tasks:
@@ -16,7 +17,6 @@
         classic: yes
         channel: "1.18/stable"
     - name: install kubectl for jenkins
-      ansible_become_password: 0000
       become_user: jenkins
       shell:
         cmd: curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
