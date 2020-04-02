@@ -1,6 +1,7 @@
 - name: dummy
   vars:
     ansible_ssh_pass: 0000 
+    ansible_sudo_pass: 0000
 #  become: true
   hosts: k8s
   tasks:
