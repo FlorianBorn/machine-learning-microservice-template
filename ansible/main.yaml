@@ -11,6 +11,11 @@
       apt:
         name: git
         update_cache: yes
+    - name: install curl
+      become: yes
+      apt:
+        name: curl
+        update_cache: yes
     - name: install microk8s
       snap:
         name: microk8s
@@ -18,6 +23,6 @@
         channel: "1.18/stable"
     - name: install kubectl for jenkins
       become_user: jenkins
-      shell:
-        cmd: curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-        cmd: chmod +x ./kubectl
+      shell: |
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+        chmod +x ./kubectl
