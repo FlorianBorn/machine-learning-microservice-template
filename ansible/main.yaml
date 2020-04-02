@@ -4,6 +4,10 @@
 #  become: true
   hosts: k8s
   tasks:
+    - name: install git
+      apt:
+        name: git
+        update_cache: yes
     - name: install microk8s
       snap:
         name: microk8s
