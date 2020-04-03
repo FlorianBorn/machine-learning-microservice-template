@@ -10,5 +10,5 @@ then
 else
   echo "Failed to create deployment..."
   echo "Try to update deployment..."
-  kubectl set image deployment $4 $1=$3/$1:$2
+  kubectl set image deployment $4 $3/$1=$3/$1:$2
 fi
