@@ -22,10 +22,11 @@
         classic: yes
         channel: "1.18/stable"
     - name: install kubectl for jenkins
-      #become_user: jenkins
+      become: yes
       shell:
         chdir: "/home/jenkins"
         cmd: |
-          sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-          sudo chmod +x ./kubectl
-          sudo chown jenkins:jenkins ./kubectl
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          chown jenkins:jenkins ./kubectl
+          mv ./kubectl /usr/local/bin/kubectl
