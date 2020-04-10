@@ -1,4 +1,4 @@
-# machine-learning-microservice-template
+# machine-learning-microservice-template (Version 0.1.0)
 
 ## Project
 The goal of this project is to propose a machine learning template for simple machine learning use cases.
