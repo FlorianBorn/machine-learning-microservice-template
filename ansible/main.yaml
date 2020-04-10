@@ -1,0 +1,32 @@
+- name: dummy
+  vars:
+    ansible_ssh_pass: 0000 
+    ansible_sudo_pass: 0000
+    ansible_become_password: 0000
+#  become: true
+  hosts: k8s
+  tasks:
+    - name: install git
+      become: yes
+      apt:
+        name: git
+        update_cache: yes
+    - name: install curl
+      become: yes
+      apt:
+        name: curl
+        update_cache: yes
+    - name: install microk8s
+      snap:
+        name: microk8s
+        classic: yes
+        channel: "1.18/stable"
+    - name: install kubectl for jenkins
+      become: yes
+      shell:
+        chdir: "/home/jenkins"
+        cmd: |
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          chown jenkins:jenkins ./kubectl
+          mv ./kubectl /usr/local/bin/kubectl
