@@ -8,15 +8,15 @@ node {
     }
 }
 
-//node("ansible") {
+node("ansible") {
     
-//     checkout(scm)
-//    stage("setup microk8s") {
-//        dir("ansible") {
-//            sh "ansible-playbook main.yaml -i inventory -u ansible --extra-vars 'ansible_ssh_pass=0000'"
-//        }
-//    }
-//}
+     checkout(scm)
+    stage("setup microk8s") {
+        dir("ansible") {
+            sh "ansible-playbook main.yaml -i inventory -u ansible --extra-vars 'ansible_ssh_pass=0000'"
+        }
+    }
+}
 
 node("k8s") {
 
