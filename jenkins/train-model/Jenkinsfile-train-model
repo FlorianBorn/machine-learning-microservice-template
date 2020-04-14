@@ -22,6 +22,7 @@ node {
     }
 
     stage('Test Model') {
+        echo sh(returnStdout: true, script: 'env')
         withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}" ) {
             unstash(name: "model")
             dir("jenkins/train-model") {
