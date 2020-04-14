@@ -1,0 +1,40 @@
+---
+repository: n02291 # Docker
+registry: https://index.docker.io/v1/
+docker_credentials_id: docker
+
+runtime_image_name: ml_template_runtime_env
+runtime_image_tag: 0.2.0
+
+production_image_name: ml_template_production_env
+production_image_tag: 0.0.1
+
+docker_socket_path: "/var/run/docker.sock" # default linux path
+model_path: "model_bin"
+model_name: "model.pkl"
+
+github_project_name: "machine-learning-microservice-template"
+
+### Helm ###
+# Deployment
+deployment_name: ml-microservice
+deployment_label: ml-microservice
+
+container_name: ml-microservice
+registry: n02291
+image_name: prod_ml_microservice
+image_tag: 0.0.1
+container_port: 8000
+
+replicas: 2
+
+# Service
+service_name: ml-service
+service_type: NodePort
+service_port: 8000 # the port where the app is running
+service_node_port: 30000 # the port which is exposed publicly
+
+######
+
+
+...
