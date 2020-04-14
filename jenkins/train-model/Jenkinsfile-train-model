@@ -1,6 +1,6 @@
 node {
     checkout(scm)
-    config = readYaml(file: "config.yaml")
+    config = readYaml(file: "jenkins/config.yaml")
 
     System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true") // for debugging
 
