@@ -1,6 +1,6 @@
 node {
     checkout(scm)
-    config = readYaml(file: "jenkins/config.yaml")
+    config = readYaml(file: "config.yaml")
 
     stage('Train Model') {
 

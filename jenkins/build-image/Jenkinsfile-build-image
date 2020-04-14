@@ -1,6 +1,6 @@
 node {
     checkout(scm)
-    config = readYaml(file: "jenkins/config.yaml")
+    config = readYaml(file: "config.yaml")
 
     stage("Lint Webservice") {
         withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {

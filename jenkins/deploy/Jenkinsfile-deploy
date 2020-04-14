@@ -4,7 +4,7 @@ node {
     }
 
     stage("get config variables") {
-        config = readYaml(file: "jenkins/config.yaml")
+        config = readYaml(file: "config.yaml")
     }
 }
 
