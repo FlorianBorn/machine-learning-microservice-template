@@ -7,6 +7,9 @@ node {
 
     stage('Train Model') {
 
+        echo(env.getEnvironment().collect({environmentVariable ->  "${environmentVariable.key} = ${environmentVariable.value}"}).join("\n"))
+        echo(System.getenv().collect({environmentVariable ->  "${environmentVariable.key} = ${environmentVariable.value}"}).join("\n"))
+
         sh(script: "echo ${env}")
 
         // list all env variables 
