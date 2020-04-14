@@ -19,6 +19,13 @@ Proposing these interfaces is one of this projects goals.
 When it comes to deploying a machine learning model, it shouldn't matter if the model predict dog races, types of flowers or anything else. There must be some processes which train the model, embed the model into a web service, build a docker image and deploy this image to a production environment.
 The second goal of this project is to build a reusable pipeline which deploys the model to production.
 
+## ToDo's
+- [ ] add example / walkthrough
+- [ ] move the example code to a separate branch
+- [ ] rework ansible commands (remove passwords/ use vault)
+- [ ] move config.yml from jenkins/ to projects root to serve as project configuration file
+- [ ] add basic logging functionality
+
 ## Files & Folders
 **ansible**: contains all files, which are required to setup the initial infrastructure  
 **dockerfiles**: contains Dockerfiles and build scripts to build a runtime image which is used in the deployment pipelines and the production image which  contains the final web service  
@@ -29,7 +36,6 @@ The second goal of this project is to build a reusable pipeline which deploys th
 **tests**: contains test requests  
 **utils**: contains the source code to build the model  
 **main.py**: the web service  
-
 
 ## Infrastructure
 ![alt text](docs/ml-template-project-architecture.png "Infrastructure Setup")  
