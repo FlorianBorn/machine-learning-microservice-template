@@ -12,7 +12,7 @@ node("k8s") {
 
     stage("Deploy to k8s") {
         withEnv(['PATH+EXTRA=/snap/bin']) {
-            sh "jenkins/deploy/deployment.sh ${config.production_image_name} ${config.production_image_tag} ${config.repository} ${config.deployment_name}"
+            sh "jenkins/deploy/deployment.sh ${config.deployment_name} config.yaml"
         }
     }   
 }
