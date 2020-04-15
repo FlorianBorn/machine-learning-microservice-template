@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.container_name }}
-        image: {{ .Values.registry }}/{{ .Values.image_name }}:{{ .Values.image_tag }}
+        image: {{ .Values.repository }}/{{ .Values.production_image_name }}:{{ .Values.production_image_tag }}
         ports:
         - containerPort: {{ .Values.container_port }}
 
