@@ -1,4 +1,4 @@
-# $1 ... image name
+# $1 ... image name (which should be tested)
 # $2 ... image tag
 
 # Template Imports
