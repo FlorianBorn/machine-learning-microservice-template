@@ -1,6 +1,7 @@
 # $1 ... deployment name
 # $2 ... values file
 
+echo "Try to install deployment..."
 microk8s.helm3 install $1 -f $2 helm/
 if [ $? -eq 0 ]
 then
