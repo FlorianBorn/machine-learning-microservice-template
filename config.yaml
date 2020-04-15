@@ -1,32 +1,31 @@
 ---
-repository: n02291 # Docker
-registry: https://index.docker.io/v1/
-docker_credentials_id: docker
+repository: n02291 # The name of the docker Repository to use.
+registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
+docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
 
-runtime_image_name: ml_template_runtime_env
-runtime_image_tag: 0.2.0
+runtime_image_name: ml_template_runtime_env # The image name of the runtime image which Jenkins uses to run used within the Jenkins pipelines
+runtime_image_tag: 0.2.0 
 
-production_image_name: ml_template_production_env
-production_image_tag: 0.0.1
+production_image_name: ml_template_production_env # The name you want the final image to have
+production_image_tag: 0.0.1 
 
 docker_socket_path: "/var/run/docker.sock" # default linux path
-model_path: "model_bin"
-model_name: "model.pkl"
+model_path: "model_bin" # the folder where the trained model should be stored
+model_name: "model.pkl" # the name the trained model will have (.pkl is mandatory)
 
 github_project_name: "machine-learning-microservice-template"
 
 ### Helm ###
 # Deployment
-deployment_name: ml-microservice
-deployment_label: ml-microservice
+deployment_name: ml-microservice # how should the k8s deployment be named
+deployment_label: ml-microservice # what label you want to give to the deployment
 
-container_name: ml-microservice
-registry: n02291
+container_name: ml-microservice # How should the containers be named within k8s 
 image_name: prod_ml_microservice
 image_tag: 0.0.1
-container_port: 8000
+container_port: 8000 # the port which should be exposed by the container (the port where the webservice is running)
 
-replicas: 2
+replicas: 2 
 
 # Service
 service_name: ml-service
