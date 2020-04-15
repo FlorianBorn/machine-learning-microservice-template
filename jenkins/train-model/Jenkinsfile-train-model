@@ -1,6 +1,7 @@
 node {
     checkout(scm)
-    config = readYaml(file: "jenkins/config.yaml")
+    config = readYaml(file: "config.yaml")
+    runtime_image = "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}"
 
     System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true") // for debugging
 
@@ -15,7 +16,7 @@ node {
         // list all env variables 
         sh(script: 'env|sort', returnStdout: true)
 
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {
+        withDockerContainer(image: "${runtime_image}", args: "-u 0:0") {
             //sh "echo hello from container!"
             dir("jenkins/train-model") {
                 sh "python3 train.py"
@@ -26,7 +27,7 @@ node {
 
     stage('Test Model') {
         echo sh(returnStdout: true, script: 'env')
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}" ) {
+        withDockerContainer(image: "${runtime_image}" ) {
             unstash(name: "model")
             dir("jenkins/train-model") {
                 sh "python3 test.py"
