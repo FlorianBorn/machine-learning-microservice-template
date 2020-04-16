@@ -1,16 +1,23 @@
 node {
     checkout(scm)
-    config = readYaml(file: "jenkins/config.yaml")
+    config = readYaml(file: "config.yaml")
+    runtime_image = "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}"
+
+    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true") // for debugging
+
 
     stage('Train Model') {
+
+        echo(env.getEnvironment().collect({environmentVariable ->  "${environmentVariable.key} = ${environmentVariable.value}"}).join("\n"))
+        echo(System.getenv().collect({environmentVariable ->  "${environmentVariable.key} = ${environmentVariable.value}"}).join("\n"))
 
         sh(script: "echo ${env}")
 
         // list all env variables 
         sh(script: 'env|sort', returnStdout: true)
 
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {
-            sh "echo hello from container!"
+        withDockerContainer(image: "${runtime_image}", args: "-u 0:0") {
+            //sh "echo hello from container!"
             dir("jenkins/train-model") {
                 sh "python3 train.py"
             }
@@ -19,7 +26,8 @@ node {
     }
 
     stage('Test Model') {
-        withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.tag}" ) {
+        echo sh(returnStdout: true, script: 'env')
+        withDockerContainer(image: "${runtime_image}" ) {
             unstash(name: "model")
             dir("jenkins/train-model") {
                 sh "python3 test.py"
@@ -40,45 +48,5 @@ node {
             sh "git commit -am 'feat: re-train model (by jenkins)'"
             sh "git push origin ${env.BRANCH_NAME}"
         }
-        
-        
-
     }
 }
-
-// pipeline {
-//     agent any
-//     stages {
-//         stage("Train Model") {
-//             agent {
-//                 docker {
-//                     image "${config.repository}/${config.runtime_image_name}:${config.tag}" // ToDo: take the image name, repo and tag from a config file 
-//                     args "-v ${config.doocker_socket_path}:${config.docker_socker_path}"
-//                 }
-//             }
-//             steps {                
-//                 sh "echo Train Model!"
-//                 dir("jenkins/train-model") {
-//                     sh "python3 train.py"
-//                 }
-                
-//             }
-//         }
-//         stage("Test Model") {
-//             steps {
-//                sh "echo Test Model!"
-//                 dir("jenkins/train-model") {
-//                     sh "python3 test.py"
-//                 }
-//             }
-//         }
-//         stage("Push Model") {
-//             steps {
-//                 sh "echo Push Model!"
-//                 dir("jenkins/train-model") {
-//                     sh "push.sh"
-//                 }                
-//             }
-//         }
-//     }
-// }
