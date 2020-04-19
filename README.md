@@ -25,7 +25,7 @@ The second goal of this project is to build a reusable pipeline which deploys th
 - [ ] rework ansible commands (remove passwords/ use vault)
 - [x] move config.yml from jenkins/ to projects root to serve as project configuration file
 - [ ] add basic logging functionality
-- [ ] remove dummy files
+- [x] remove dummy files
 
 ## Files & Folders
 **ansible**: contains all files, which are required to setup the initial infrastructure  
