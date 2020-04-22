@@ -35,7 +35,7 @@ The second goal of this project is to build a reusable pipeline which deploys th
 **jenkins**: contains all Jenkinsfiles and required helper files which are needed during each stage  
 **model_bin**: contains the model binary  
 **tests**: contains test requests  
-**utils**: contains the source code to build the model  
+**source**: contains the source code to build the model  
 **main.py**: the web service  
 
 ## Infrastructure
@@ -43,6 +43,6 @@ The second goal of this project is to build a reusable pipeline which deploys th
 **Github**: The single source of truth. Here, all project related file are stored (source code but also configuration files, dockerfiles, helm charts, build scripts, and so on)  
 **Jenkins**: Jenkins is used as CI/CD Tool.  
 **Docker Hub**: Every artifact, which is build within the Jenkins pipeline should be stored in a central registry. For docker images Docker Hub is used.  
-**Ansible**: A configuration management tool. Here, it is used to set up a Microk8s cluster on the target machine.
+**Ansible**: A configuration management tool. Here, it is used to set up a Microk8s cluster on the target machine.  
 **Helm**: Helm is the package manager for kubernetes. It also brings a templating engine, which gives us the possibility to use variables in the k8s ressource definition files. This way it is possible to use variables from a central configuration file.    
 **Kubernetes**: k8s is used as deployment target for the final docker image.  
