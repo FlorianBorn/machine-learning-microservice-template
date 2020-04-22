@@ -1,5 +1,5 @@
 import pandas as pd
-from utils.config import target_label
+from source.config import target_label
 from sklearn.preprocessing import LabelEncoder
 from typing import Tuple
 

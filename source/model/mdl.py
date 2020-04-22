@@ -2,7 +2,7 @@
 import pandas as pd
 import pathlib
 import pickle as pkl
-from utils.config import default_model_path, default_model_name
+from source.config import default_model_path, default_model_name
 
 # Custom Imports
 from .preprocessing import Preprocessor

@@ -4,7 +4,7 @@ sys.path.append("utils")
 from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
-from utils.model.mdl import Model
+from source.model.mdl import Model
 import pandas as pd
 import pickle as pkl
 

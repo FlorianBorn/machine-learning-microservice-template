@@ -3,7 +3,7 @@ import sys
 sys.path.append("../../") # project's root
 import logging
 
-from utils.model.mdl import Model
+from source.model.mdl import Model
 import pandas as pd
 
 # Custom Imports
