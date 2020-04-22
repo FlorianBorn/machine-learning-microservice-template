@@ -1,8 +1,8 @@
 # Template Imports
+from pathlib import Path
 import sys
-sys.path.append("../../")
+sys.path.append(str(Path(__file__).resolve().parents[2])) # project's root
 import logging
-
 from source.model.mdl import Model
 from source.data.data_loader import DataLoader
 

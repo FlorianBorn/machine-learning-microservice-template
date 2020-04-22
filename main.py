@@ -1,6 +1,6 @@
 # from https://fastapi.tiangolo.com/tutorial/first-steps/
 import sys
-sys.path.append("utils")
+sys.path.append("source")
 from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
