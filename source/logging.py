@@ -1,11 +1,12 @@
 import logging
-from typing import List
+from typing import List, Union
 from pymongo import MongoClient
+from datetime import datetime
 
 logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
                     datefmt='%m-%d %H:%M:%S',
                     level=logging.DEBUG)
-                    
+
 
 class Logger():
     def __init__(self, client_url="mongodb", port=27017, db_name="ml_service", collection_name="prediction_logs"):
@@ -25,23 +26,31 @@ class Logger():
             return None
             
     def _is_connected(self):
-        if self.client:
-            return True
-        else:
-            return False
+        if self.client: return True
+        else: return False
 
-    def emit_one(self, doc: dict):
+    def emit_one(self, doc: dict, add_timestamp: bool=True):
+        if not self.is_connected: self._connect(self.client, self.port)
         if not self.is_connected:
-            self._connect(self.client, self.port)
-        if self.is_connected:
-            self.client[self.db_name][self.collection_name].insert_one(doc)
-        else:
             logging.warning(f"Could not emit log! No connection to DB 'mongodb://{self.client_url}:{self.port}/'")
+            return
+        if add_timestamp == True: self._add_timestamp(doc) 
+        self.client[self.db_name][self.collection_name].insert_one(doc)
 
-    def emit_many(self, docs: List[dict]):
+    def emit_many(self, docs: List[dict], add_timestamp: bool=True):
+        if not self.is_connected: self._connect(self.client, self.port)
         if not self.is_connected:
-            self._connect(self.client, self.port)
-        if self.is_connected:
-            self.client[self.db_name][self.collection_name].insert_many(docs)
-        else:
             logging.warning(f"Could not emit logs! No connection to DB 'mongodb://{self.client_url}:{self.port}/'")
+            return
+        if add_timestamp == True: self._add_timestamp(docs) 
+        self.client[self.db_name][self.collection_name].insert_many(docs)
+        
+    def _add_timestamp(self, doc: Union[list, dict]):
+        t = type(doc)
+        now = datetime.now()
+        if t == dict:
+            doc['timestamp'] = now
+        elif t == list:
+            for d in doc:
+                d['timestamp'] = now
+        return doc
