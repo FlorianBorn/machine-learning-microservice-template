@@ -4,7 +4,7 @@
 import sys
 sys.path.append("source")
 from typing import List
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from pydantic import BaseModel
 from source.model.mdl import Model
 from source.logging import Logger
@@ -37,11 +37,11 @@ async def startup():
         app.config = yaml.load(fp)
     with open("model_bin/model.pkl", "rb") as fp:
         app.model = pkl.load(fp)
-    app.logger = Logger(client_url=app.config['db_url'])
+    if app.config['enable_logging'] == True:
+        app.logger = Logger(client_url=app.config['db_url'])
 
 @app.on_event("shutdown")
 async def shutdown():
-    print(foo)
     print("shutdown!")
 
 @app.get("/api/hello-world")
@@ -49,19 +49,20 @@ def read_root():
     return {"Hello": "World"}
 
 @app.post("/api/predictions", response_model=List[PredictionResponse])
-def predict(request: List[PredictionRequest]):
+def predict(request: List[PredictionRequest], background_tasks: BackgroundTasks):
     '''
     request can contain 1 or more samples
     '''
-    X = prepare_request(request)
+    X = process_request(request)
     predictions = app.model.predict(X)
     response = [{"class_name": str(p)} for p in predictions] # convert prediction (array) to a list of dicts
-    app.logger.emit_many(response)
+    if app.config['enable_logging'] == True:
+        background_tasks.add_task(app.logger.emit_many, response)
     return response
 
 @app.post("/api/proba_predictions", response_model=List[ProbaPredictionResponse])
-def predict_proba(request: List[PredictionRequest]):
-    X = prepare_request(request)
+def predict_proba(request: List[PredictionRequest], background_tasks: BackgroundTasks):
+    X = process_request(request)
     predictions = app.model.predict_proba(X).tolist()
 
     # prepare response
@@ -70,10 +71,12 @@ def predict_proba(request: List[PredictionRequest]):
     for p in predictions:
         d = {"class_names": classes, "probabilities": p}
         response.append(d)
+    if app.config['enable_logging'] == True:
+        background_tasks.add_task(app.logger.emit_many, response)
     return response
 
-def prepare_request(request: List[PredictionRequest]):
-    req = [r.dict() for r in request] # convert list of PredictionRequest objects to a list of dicts
+def process_request(request: List[PredictionRequest]):
+    req = [r.dict() for r in request] # convert a list of PredictionRequest objects to a list of dicts
     return pd.DataFrame(req)
 
 
