@@ -1,4 +1,5 @@
 ---
+### general ### 
 repository: n02291 # The name of the docker Repository to use.
 registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
 docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
@@ -32,6 +33,15 @@ service_name: ml-service
 service_type: NodePort
 service_port: 8000 # the port where the app is running
 service_node_port: 30000 # the port which is exposed publicly
+
+### Logging ###
+enable_logging: True
+db_url: localhost 
+db_port: 27017
+timezone: Europe/Berlin # for possible values see: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+
+
+### Source ###
 
 ######
 
