@@ -6,9 +6,9 @@ from typing import Tuple
 
 class Preprocessor():
     def __init__(self):
-        self.le = LabelEncoder()
+        pass
 
-    def split_X_y(self, data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def split_X_y(self, data: pd.DataFrame, target_label:str) -> Tuple[pd.DataFrame, pd.DataFrame]:
         '''
         Splits the data from the datapipeline into X and y
 
@@ -44,7 +44,7 @@ class Preprocessor():
         input: 
             takes a DataFrame containing the target data
         '''
-        self.le.fit(y[target_label])
+        pass
 
     def process_y(self, y: pd.DataFrame) -> pd.DataFrame:
         '''
@@ -53,30 +53,5 @@ class Preprocessor():
         return:
             preprocessed data (to be used for train the model)
         '''
-        processed_y = self.le.transform(y[target_label])
-        processed_y = pd.DataFrame(processed_y, columns=['target'])
+        processed_y = y
         return processed_y    
-
-    # def process_raw(self, X: pd.DataFrame, y: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    #     '''
-    #     input: 
-    #         takes a complete DataFrame from the Datapipeline as Input
-    #     return:
-    #         preprocessed data splitted into X and y (to use for training the model)
-    #     '''
-        
-    #     X = data.drop(target_label, axis=1)
-    #     y = self.le.fit_transform(data[target_label])
-    #     y = pd.DataFrame(y, columns=['target'])
-    #     return X, y
-    
-    # def process_inference(self, X: pd.DataFrame) -> pd.DataFrame:
-    #     '''
-    #     input: 
-    #         takes a DataFrame containing only Features for prediction
-    #     return:
-    #         preprocessed X to feed into the trained model
-    #     '''
-    #     processed_X = X
-    #     return processed_X
-
