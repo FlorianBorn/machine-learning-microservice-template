@@ -3,8 +3,7 @@ import pandas as pd
 import pathlib
 import pickle as pkl
 from source.config import default_model_path, default_model_name
-from .preprocessing import Preprocessor
-from .train import train_model
+from .train import train_model, Preprocessor, get_classes
 
 # Custom Imports
 # ...
@@ -37,7 +36,7 @@ class Model():
 
         # fitting
         self.model = train_model(processed_X, processed_y)
-        self.classes = [str(c) for c in self.model.classes_] # set classes; classes are needed later while predicting probabilities
+        self.classes = get_classes(self.model)
 
     def predict(self, X: pd.DataFrame):
         processed_X = self.preprocessor.process_X(X)
