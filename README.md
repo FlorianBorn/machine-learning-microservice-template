@@ -27,7 +27,7 @@ The second goal of this project is to build a reusable pipeline which deploys th
 - [x] add basic logging functionality
 - [ ] add utilities (e.g. for deploying the mongodb required for logging) 
 - [x] remove dummy files
-- [ ] create pydantic classes dynamically from yaml files
+- [x] create pydantic classes dynamically from yaml files
 
 ## Files & Folders
 **ansible**: contains all files, which are required to setup the initial infrastructure  
@@ -48,3 +48,43 @@ The second goal of this project is to build a reusable pipeline which deploys th
 **Ansible**: A configuration management tool. Here, it is used to set up a Microk8s cluster on the target machine.  
 **Helm**: Helm is the package manager for kubernetes. It also brings a templating engine, which gives us the possibility to use variables in the k8s ressource definition files. This way it is possible to use variables from a central configuration file.    
 **Kubernetes**: k8s is used as deployment target for the final docker image.  
+
+## Getting Started <hr>  
+### Fill in your code
+The following classes and functions must be implemented or completed:
+- DataLoader
+- Preprocessor
+- train_model
+- get_classes
+- features.yaml
+
+The DataLoader's load_data method must return single DataFrame containing all the data, which are used during the training process.  
+Preprocessor is a class, which helps to transform the raw DataFrame into a processed DataFrame, which can be used by a machine learning algorithm. It also stores Encoders/Vectorizers so they can later be used to transform incoming requests. If preprocessing steps are required, they must go into the Preprocessor.  
+train_model is a function which takes the processed data as arguments and returns a trained model.  
+If the ml-model is a classifier, the get_classes function must be implemented. The known classes are used when predicting probabilities. The probabilities are returned together with their corresponding class names.  
+In features.yaml you must provide a list of features, which are used for training the model. This list is necessary to know which request parameters are required.  
+
+This template already contains a minimal working example. Each code snipped, which belongs to this example is marked with  
+```
+# Example  
+...  
+# End Example  
+```
+### Start the Web Service locally
+```
+cd getting-started
+./start_local_service.sh
+```
+Now you should be able to test your running service.  
+Visit: localhost:5000/docs
+### Enable Logging
+The service comes with a basic logging functionality, which is turned off by default.  
+If enabled it will emit a log for every prediction to a given MongoDB.  
+```
+cd getting-started
+./start_mongodb.sh
+
+In config.yaml --> set enable_logging to true
+restart the web service
+```
+### Build the Service with Jenkins
