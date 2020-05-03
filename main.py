@@ -11,24 +11,11 @@ from source.logging import Logger
 import pandas as pd
 import pickle as pkl
 import yaml
-
+from source.webservice_utils import PredictionRequest, PredictionResponse, ProbaPredictionResponse
 
 
 app = FastAPI()
 
-# define Request-Parameter
-class PredictionRequest(BaseModel):
-    sepal_length: float
-    sepal_width: float
-    petal_length: float
-    petal_width: float
-
-class PredictionResponse(BaseModel):
-    class_name: str
-
-class ProbaPredictionResponse(BaseModel):
-    class_names: List[str]
-    probabilities: List[float]
 
 @app.on_event("startup")
 async def startup():
@@ -57,6 +44,7 @@ def predict(request: List[PredictionRequest], background_tasks: BackgroundTasks)
     '''
     request can contain 1 or more samples
     '''
+    print(request)
     X = process_request(request)
     predictions = app.model.predict(X)
     response = [{"class_name": str(p)} for p in predictions] # convert prediction (array) to a list of dicts
