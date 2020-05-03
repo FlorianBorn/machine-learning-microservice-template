@@ -11,6 +11,14 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
 
 class Logger():
     def __init__(self, client_url="mongodb", port=27017, db_name="ml_service", collection_name="prediction_logs", timezone:str="GMT"):
+        
+        logging.info(f'''Initialize Logger - Given Arguments:
+            Client URL: {client_url}
+            Port: {port}
+            DB-Name: {db_name}
+            Collection Name: {collection_name}
+            Timezone: {timezone}
+        ''')
         self.client_url = client_url
         self.port = port
         self.db_name = db_name
