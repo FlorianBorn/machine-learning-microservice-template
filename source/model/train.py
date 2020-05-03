@@ -1,31 +1,79 @@
-import numpy as np
+# Template Imports
 import pandas as pd
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.feature_selection import RFE
-from sklearn.linear_model import SGDClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
-from sklearn.pipeline import make_pipeline, make_union
-from tpot.builtins import StackingEstimator
-from tpot.export_utils import set_param_recursive
+from source.config import target_label
+from typing import Tuple
+
+# Custom Imports
 
 
-def train_model(X: pd.DataFrame, y: pd.DataFrame):
-    '''
-    input: 
-        X: a DataFrame containing the data neccessary to train the model (must be preprocessed)
-        y: the target data (must be preprocessed)
-    returns:
-        mdl: a trained model object
-    '''       
-    # Average CV score on the training set was: 0.9729729729729729
-    exported_pipeline = make_pipeline(
-        StackingEstimator(estimator=SGDClassifier(alpha=0.001, eta0=1.0, fit_intercept=True, l1_ratio=0.0, learning_rate="constant", loss="modified_huber", penalty="elasticnet", power_t=50.0)),
-        RFE(estimator=ExtraTreesClassifier(criterion="gini", max_features=0.5, n_estimators=100), step=0.1),
-        GaussianNB()
-    )
-    # Fix random state for all the steps in exported pipeline
-    set_param_recursive(exported_pipeline.steps, 'random_state', 42)
+class Preprocessor():
+    def __init__(self):
+        pass
 
-    exported_pipeline.fit(X, y)
-    return exported_pipeline
+    def split_X_y(self, data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        '''
+        Splits the data from the datapipeline into X and y
+
+        input: 
+            data: a DataFrame containing all features and target data
+        return:
+            X: all features
+            y: target data
+        '''
+        ### Example:
+        X = data.drop(target_label, axis=1)
+        y = pd.DataFrame(data["species"])
+        ### End Example
+        return X, y
+
+    def fit_X(self, X: pd.DataFrame) -> pd.DataFrame:
+        '''
+        input: 
+            takes a DataFrame containing all features as input
+        '''
+        pass
+
+    def process_X(self, X: pd.DataFrame) -> pd.DataFrame:
+        '''
+        input: 
+            takes a DataFrame containing all features as input
+        return:
+            preprocessed data (to be used by the model)
+        '''
+        ### Example:
+        processed_X = X
+        ### End Example
+        return processed_X
+
+    def fit_y(self, y: pd.DataFrame) -> pd.DataFrame:
+        '''
+        input: 
+            takes a DataFrame containing the target data
+        '''
+        pass
+
+    def process_y(self, y: pd.DataFrame) -> pd.DataFrame:
+        '''
+        input: 
+            takes a DataFrame containing the target data
+        return:
+            preprocessed data (to be used for train the model)
+        '''
+        ### Example:
+        processed_y = y
+        ### End Example
+        return processed_y    
+
+
+def train_model(X_processed, y_processed):
+    ### Example:
+    from sklearn.dummy import DummyClassifier
+    model = DummyClassifier().fit(X_processed, y_processed)
+    ### End Example
+    return model
+
+def get_classes(model):
+    ### Example:
+    classes = [str(c) for c in self.model.classes_] # set classes; classes are needed later while predicting probabilities
+    ### End Example
+    return classes
