@@ -21,8 +21,9 @@ class Logger():
 
     def _connect(self, client_url, port):
         try:
+            client = MongoClient(f'mongodb://{self.client_url}:{port}/')
             logging.info(f"Connected to: 'mongodb://{self.client_url}:{port}/'")
-            return MongoClient(f'mongodb://{self.client_url}:{port}/')
+            return client
         except:
             logging.warning(f"Could not connect to: 'mongodb://{self.client_url}:{port}/'")
             return None
