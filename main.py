@@ -39,7 +39,8 @@ async def startup():
         app.model = pkl.load(fp)
     if app.config['enable_logging'] == True:
         app.logger = Logger(client_url=app.config['mongo_db_url'],
-            port=app.config['mongo_db_port'], 
+            port=app.config['mongo_db_port'],
+            db_name=app.config['mongo_db_name'],
             timezone=app.config['timezone'])
 
 @app.on_event("shutdown")
