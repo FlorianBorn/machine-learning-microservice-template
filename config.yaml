@@ -36,8 +36,8 @@ service_node_port: 30000 # the port which is exposed publicly
 
 ### Logging ###
 enable_logging: True
-db_url: localhost 
-db_port: 27017
+mongo_db_url: localhost 
+mongo_db_port: 27017
 timezone: Europe/Berlin # for possible values see: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
 
 
