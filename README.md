@@ -49,7 +49,7 @@ The second goal of this project is to build a reusable pipeline which deploys th
 **Helm**: Helm is the package manager for kubernetes. It also brings a templating engine, which gives us the possibility to use variables in the k8s ressource definition files. This way it is possible to use variables from a central configuration file.    
 **Kubernetes**: k8s is used as deployment target for the final docker image.  
 
-## Getting Started <hr>  
+## Getting Started  
 ### Fill in your code
 The following classes and functions must be implemented or completed:
 - DataLoader
