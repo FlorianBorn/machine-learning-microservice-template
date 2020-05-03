@@ -41,6 +41,7 @@ async def startup():
         app.logger = Logger(client_url=app.config['mongo_db_url'],
             port=app.config['mongo_db_port'],
             db_name=app.config['mongo_db_name'],
+            collection_name=app.config['logging_collection_name'],
             timezone=app.config['timezone'])
 
 @app.on_event("shutdown")
