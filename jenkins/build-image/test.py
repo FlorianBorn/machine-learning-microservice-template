@@ -42,7 +42,7 @@ params = {
         "image": "{}:{}".format(args.image_name, args.image_tag),
         "detach": True,
         "name": "image-test",
-        #"remove": True
+        "remove": True
 }
 
 container = client.containers.run(**params)
