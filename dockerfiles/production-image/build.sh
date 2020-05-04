@@ -3,6 +3,6 @@
 
 cd ../..
 image_name=$1 # e.g. prod_ml_microservice
-image_version=$2 # e.g. 0.0.1
-docker build -t "${image_name}:${image_version}" -f dockerfiles/production-image/Dockerfile .
+image_tag=$2 # e.g. 0.0.1
+docker build -t "${image_name}:${image_tag}" -f dockerfiles/production-image/Dockerfile .
 cd dockerfiles/runtime-image
