@@ -74,6 +74,6 @@ def train_model(X_processed, y_processed):
 
 def get_classes(model):
     ### Example:
-    classes = [str(c) for c in self.model.classes_] # set classes; classes are needed later while predicting probabilities
+    classes = [str(c) for c in model.classes_] # set classes; classes are needed later while predicting probabilities
     ### End Example
     return classes
