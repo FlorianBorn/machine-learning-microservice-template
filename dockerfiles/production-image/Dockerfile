@@ -6,7 +6,7 @@ RUN pip install -r /microservice/requirements.txt
 RUN pip install uvicorn==0.11.3
 
 COPY source /microservice/source
-COPY main.py /microservice/
+COPY main.py config.yaml /microservice/
 
 COPY model_bin/model.pkl /microservice/model_bin/model.pkl
 
