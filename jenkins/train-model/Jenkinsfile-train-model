@@ -2,6 +2,7 @@ node {
     checkout(scm)
     config = readYaml(file: "config.yaml")
     runtime_image = "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}"
+    branch_name = "master"
 
     System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true") // for debugging
 
@@ -41,13 +42,13 @@ node {
             sh "git config --global user.name 'jenkins'"
             sh "git config --global user.email 'jenkins@localhost'"
 
-            sh "git checkout ${BRANCH_NAME}" // solves: fatal: You are not currently on a branch.
+            sh "git checkout ${branch_name}" // solves: fatal: You are not currently on a branch.
             sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${config.github_project_name}.git" // solves: fatal: could not read Username for 'https://github.com': No such device or address 
             sh "git pull"    // solves: error: failed to push some refs to  ...
             unstash(name: "model")
             sh "git commit -am 'feat: re-train model (by jenkins)'"
             //sh "git push origin ${env.BRANCH_NAME}"
-            sh "git push origin master"
+            sh "git push origin ${branch_name}"
         }
     }
 }
