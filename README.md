@@ -87,4 +87,6 @@ cd getting-started
 In config.yaml --> set enable_logging to true
 restart the web service
 ```
+### Build the runtime Image
+
 ### Build the Service with Jenkins
