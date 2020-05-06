@@ -1,10 +1,12 @@
 node {
     checkout(scm)
     config = readYaml(file: "config.yaml")
+    pipeline_path = "jenkins/build-image"
 
     stage("Lint Webservice") {
         withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {
-            sh "pylint --exit-zero --extension-pkg-whitelist=pydantic main.py" // --exit-zero returns always 0
+            sh "${pipeline_path}/lint_python.sh main.py"
+            //sh "pylint --exit-zero --extension-pkg-whitelist=pydantic main.py" // --exit-zero returns always 0
         }
     }
 
