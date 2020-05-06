@@ -4,6 +4,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[2])) # project's root
 import logging
 from source.model.mdl import Model
+from source.helper import load_json, load_config
 import pandas as pd
 
 # Custom Imports
@@ -15,17 +16,12 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
 
 logging.info("Start Model Tests!")
 
-# A test request must be specified!
-test_request = {
-    "sepal_length": "0.5",
-    "sepal_width": "0.5",
-    "petal_length": "0.5",
-    "petal_width": "0.5"
-}
+config = load_config()
+test_case = load_json(config["prediction_test_case_path"])
 
-logging.debug(f"Test Request: {test_request}")
+logging.debug(f"Test Request: {test_case}")
 
-dummy_request = pd.DataFrame([test_request])
+dummy_request = pd.DataFrame(test_case)
 model = Model.load()
 
 try:
@@ -33,12 +29,12 @@ try:
     prediction = model.predict(dummy_request)
     logging.debug(f"Model Predicted: {prediction}")
 except:
-    exit(-1)
+    raise
 
 try:
     logging.info(f"Test 'predict_proba' Methode")
     prediction = model.predict_proba(dummy_request)
     logging.debug(f"Model Predicted: {prediction}")
 except:
-    exit(-2)
+    raise
 
