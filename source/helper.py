@@ -13,7 +13,8 @@ def load_config():
     return config    
 
 def load_json(path:Path):
-    with open(str(path), "rb") as fp:
+    root = Path(__file__).resolve().parents[1]
+    with open(str(root / path), "rb") as fp:
         j = json.load(fp)
     return j    
 
