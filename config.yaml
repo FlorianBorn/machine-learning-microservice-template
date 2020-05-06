@@ -2,7 +2,6 @@
 ### general ### 
 repository: n02291 # The name of the docker Repository to use.
 registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
-docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
 
 runtime_image_name: ml_template_runtime_env # The image name of the runtime image which Jenkins uses to run used within the Jenkins pipelines
 runtime_image_tag: 0.2.0 
@@ -15,6 +14,12 @@ model_path: "model_bin" # the folder where the trained model should be stored
 model_name: "model.pkl" # the name the trained model will have (.pkl is mandatory)
 
 github_project_name: "machine-learning-microservice-template"
+
+prediction_test_case_path: tests/prediction/example_classification1.json # the path incl. the filename to a given dummy request to test your model 
+
+### Jenkins ###
+docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
+scm_credentials_id: github # The ID of the User used to access your SCM. The credentials of this user must be provided by Jenkins!
 
 ### Helm ###
 # Deployment
