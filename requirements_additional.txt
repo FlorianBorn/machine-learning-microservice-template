@@ -1,1 +1,2 @@
 uvicorn==0.11.5
+pylint==2.5.2
