@@ -35,9 +35,9 @@ async def startup():
 async def shutdown():
     print("shutdown!")
 
-@app.get("/api/hello-world")
+@app.get("/ping")
 def read_root():
-    return {"Hello": "World"}
+    return {"ping": "pong"}
 
 @app.post("/api/predictions", response_model=List[PredictionResponse])
 def predict(request: List[PredictionRequest], background_tasks: BackgroundTasks):
