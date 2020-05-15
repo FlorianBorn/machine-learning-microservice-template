@@ -1,15 +1,14 @@
 FROM python:3.8.2-slim
 
-COPY requirements.txt /microservice/requirements.txt
+COPY requirements*.txt /microservice/
 
-RUN pip install -r /microservice/requirements.txt
-RUN pip install uvicorn==0.11.3
+RUN pip install -r /microservice/requirements.txt -r /microservice/requirements_additional.txt
 
 COPY source /microservice/source
-COPY main.py config.yaml /microservice/
+COPY config.yaml /microservice/
 
 COPY model_bin/model.pkl /microservice/model_bin/model.pkl
 
 WORKDIR /microservice
 
-CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8000"]
+CMD ["uvicorn", "source.main:app", "--host=0.0.0.0", "--port=8000"]

@@ -11,7 +11,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
 	docker.io \
     && rm -rf /var/lib/apt/lists/*    
 
-COPY requirements.txt requirements_additional.txt /microservice/
+COPY requirements*.txt /microservice/
 
 RUN pip install -r /microservice/requirements.txt -r /microservice/requirements_additional.txt
 RUN pip install pylint docker
