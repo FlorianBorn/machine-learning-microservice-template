@@ -28,6 +28,8 @@ The second goal of this project is to build a reusable pipeline which deploys th
 - [ ] add utilities (e.g. for deploying the mongodb required for logging) 
 - [x] remove dummy files
 - [x] create pydantic classes dynamically from yaml files
+- [ ] add tests
+    - [ ] add api tests
 
 ## Files & Folders
 **ansible**: contains all files, which are required to setup the initial infrastructure  
