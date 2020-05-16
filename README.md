@@ -29,7 +29,13 @@ The second goal of this project is to build a reusable pipeline which deploys th
 - [x] remove dummy files
 - [x] create pydantic classes dynamically from yaml files
 - [ ] add tests
-    - [ ] add api tests
+    - [X] api tests
+    - [x] data pipeline
+    - [x] model class
+    - [x] preprocessor
+    - [x] funcs that should be implemented by the user
+    - [ ] logging
+    - [ ] update jenkins pipelines to run pytest
 
 ## Files & Folders
 **ansible**: contains all files, which are required to setup the initial infrastructure  
