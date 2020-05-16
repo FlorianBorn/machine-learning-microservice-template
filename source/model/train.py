@@ -26,7 +26,7 @@ class Preprocessor():
         ### End Example
         return X, y
 
-    def fit_X(self, X: pd.DataFrame) -> pd.DataFrame:
+    def fit_X(self, X: pd.DataFrame):
         '''
         input: 
             takes a DataFrame containing all features as input
@@ -45,7 +45,7 @@ class Preprocessor():
         ### End Example
         return processed_X
 
-    def fit_y(self, y: pd.DataFrame) -> pd.DataFrame:
+    def fit_y(self, y: pd.DataFrame):
         '''
         input: 
             takes a DataFrame containing the target data
