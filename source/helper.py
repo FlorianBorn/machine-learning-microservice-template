@@ -12,11 +12,12 @@ def load_config():
         config = yaml.load(fp)
     return config    
 
+
 def load_json(path:Path):
-    root = Path(__file__).resolve().parents[1]
-    with open(str(root / path), "rb") as fp:
+    with open(str(path), "rb") as fp:
         j = json.load(fp)
-    return j    
+    return j      
+
 
 def train_and_store_model():
     df_data = DataLoader().load_data()

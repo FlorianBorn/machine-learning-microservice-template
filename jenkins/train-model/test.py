@@ -17,7 +17,8 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
 logging.info("Start Model Tests!")
 
 config = load_config()
-test_case = load_json(config["prediction_test_case_path"])
+project_root = Path(__file__).resolve().parents[2]
+test_case = load_json( project_root / config["prediction_test_case_path"])
 
 logging.debug(f"Test Request: {test_case}")
 
