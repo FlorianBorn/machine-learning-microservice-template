@@ -11,8 +11,8 @@ from source.logging import Logger
 import pandas as pd
 import pickle as pkl
 import yaml
-from source.webservice_utils import PredictionRequest, PredictionResponse, ProbaPredictionResponse
-
+from source.api.models import PredictionRequest, PredictionResponse, ProbaPredictionResponse
+from source.api import ping, predictions
 
 app = FastAPI()
 
@@ -21,54 +21,22 @@ app = FastAPI()
 async def startup():
     #await print("startup!")
     with open("config.yaml", "r") as fp:
-        app.config = yaml.load(fp)
+        app.state.config = yaml.load(fp)
     with open("model_bin/model.pkl", "rb") as fp:
-        app.model = pkl.load(fp)
-    if app.config['enable_logging'] == True:
-        app.logger = Logger(client_url=app.config['mongo_db_url'],
-            port=app.config['mongo_db_port'],
-            db_name=app.config['mongo_db_name'],
-            collection_name=app.config['logging_collection_name'],
-            timezone=app.config['timezone'])
+        app.state.model = pkl.load(fp)
+    if app.state.config['enable_logging'] == True:
+        app.state.logger = Logger(client_url=app.state.config['mongo_db_url'],
+            port=app.state.config['mongo_db_port'],
+            db_name=app.state.config['mongo_db_name'],
+            collection_name=app.state.config['logging_collection_name'],
+            timezone=app.state.config['timezone'])
+
 
 @app.on_event("shutdown")
 async def shutdown():
     print("shutdown!")
 
-@app.get("/ping")
-def read_root():
-    return {"ping": "pong"}
 
-@app.post("/api/predictions", response_model=List[PredictionResponse])
-def predict(request: List[PredictionRequest], background_tasks: BackgroundTasks):
-    '''
-    request can contain 1 or more samples
-    '''
-    print(request)
-    X = process_request(request)
-    predictions = app.model.predict(X)
-    response = [{"class_name": str(p)} for p in predictions] # convert prediction (array) to a list of dicts
-    if app.config['enable_logging'] == True:
-        background_tasks.add_task(app.logger.emit_many, response)
-    return response
-
-@app.post("/api/proba_predictions", response_model=List[ProbaPredictionResponse])
-def predict_proba(request: List[PredictionRequest], background_tasks: BackgroundTasks):
-    X = process_request(request)
-    predictions = app.model.predict_proba(X).tolist()
-
-    # prepare response
-    classes = app.model.classes
-    response = []
-    for p in predictions:
-        d = {"class_names": classes, "probabilities": p}
-        response.append(d)
-    if app.config['enable_logging'] == True:
-        background_tasks.add_task(app.logger.emit_many, response)
-    return response
-
-def process_request(request: List[PredictionRequest]):
-    req = [r.dict() for r in request] # convert a list of PredictionRequest objects to a list of dicts
-    return pd.DataFrame(req)
-
+app.include_router(ping.router)
+app.include_router(predictions.router)
 
