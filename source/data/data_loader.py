@@ -13,12 +13,16 @@ class DataLoader():
     def __init__(self):
         pass
 
-    def load_data(self) -> pd.DataFrame:
+    def load_data(self, n_rows: int=None) -> pd.DataFrame:
         '''
+        input:
+            n_rows: 
+                how many rows of data should be returned? 
+                Is used for unit testing the models training method
         returns:
             a dataframe containing all features and the target
         '''
         ### Example:
         df_data = sns.load_dataset('iris')
         ### End Example
-        return df_data
+        return df_data.iloc[:n_rows]
