@@ -1,7 +1,7 @@
 from pathlib import Path
 import pytest
 import sys
-sys.path.append(Path(__file__).resolve().parents[1])
+sys.path.append(Path(__file__).resolve().parents[2])
 from source.model.train import Preprocessor
 import pandas as pd
 
