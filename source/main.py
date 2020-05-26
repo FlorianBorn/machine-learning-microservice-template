@@ -7,7 +7,7 @@ from typing import List
 from fastapi import FastAPI, BackgroundTasks
 from pydantic import BaseModel
 from source.model.mdl import Model
-from source.logging import Logger
+from source.logging.logging import Logger
 import pandas as pd
 import pickle as pkl
 import yaml
