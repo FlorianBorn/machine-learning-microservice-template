@@ -1,6 +1,5 @@
 from source.data.data_loader import DataLoader
 from source.model.mdl import Model
-from source.config import default_model_path
 from pathlib import Path
 import json
 import yaml

@@ -1,6 +1,6 @@
 # Template Imports
 import pandas as pd
-from source.config import target_label
+from source.defaults import target_label
 from typing import Tuple
 
 # Custom Imports
