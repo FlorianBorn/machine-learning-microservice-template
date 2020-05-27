@@ -6,6 +6,12 @@ node {
 
     System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true") // for debugging
 
+    stage('Test') {
+        img = docker.image("${runtime_image}")
+        img.inside {
+            sh "pytest tests/data/ tests/model/"
+        }
+    }
 
     stage('Train Model') {
 
