@@ -2,6 +2,8 @@
 import pandas as pd
 import pathlib
 import pickle as pkl
+import uuid
+from datetime import datetime
 from source.defaults import default_model_path, default_model_name
 from .train import train_model, Preprocessor, get_classes
 
@@ -20,6 +22,8 @@ class Model():
         self.model = None
         self.preprocessor = Preprocessor()
         self.classes = None
+        self.id = self.get_uuid()
+        self.creation_time = self.get_str_timestamp()
 
     def train(self, raw_data: pd.DataFrame):
         '''
@@ -73,3 +77,9 @@ class Model():
     def export(self, path: pathlib.Path=default_model_path, name: str=default_model_name):
         with open(str(path / name), "wb") as fp:
             pkl.dump(self, fp)
+
+    def get_str_timestamp(self):
+        return datetime.now().strftime("%Y.%m.%d %H:%M:%S")
+
+    def get_uuid(self):
+        return str(uuid.uuid4())
