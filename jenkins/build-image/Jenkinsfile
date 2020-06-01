@@ -1,7 +1,17 @@
 node {
     checkout(scm)
     config = readYaml(file: "config.yaml")
+    runtime_image = "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}"
     pipeline_path = "jenkins/build-image"
+
+
+    stage('Test') {
+        img = docker.image("${runtime_image}")
+        img.inside {
+            sh "pytest ."
+        }
+    }
+
 
     stage("Lint Webservice") {
         withDockerContainer(image: "${config.repository}/${config.runtime_image_name}:${config.runtime_image_tag}", args: "-u 0:0") {
