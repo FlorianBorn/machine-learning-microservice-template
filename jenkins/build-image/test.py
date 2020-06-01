@@ -21,7 +21,7 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
 logging.info("Start Container Tests!")
 
 test_file = "classification1.json" # rename if neccassary
-test_subfolder = "api-classification-request"
+test_subfolder = "prediction"
 endpoint = "/api/predictions"
 schema = "http" # change if neccessary
 host_port = 45000
