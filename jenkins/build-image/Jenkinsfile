@@ -5,7 +5,7 @@ node {
     pipeline_path = "jenkins/build-image"
 
 
-    stage('Test') {
+    stage('Run Unit Tests') {
         img = docker.image("${runtime_image}")
         img.inside {
             sh "pytest ."
