@@ -32,7 +32,9 @@ def predict_proba(request: List[PredictionRequest], context: Request,  backgroun
     for p in predictions:
         d = {"class_names": classes, "probabilities": p}
         response.append(d)
-    add_background_tasks(background_tasks, context, request, response, "predict_proba")
+
+    flattened_response = flatten_response(response, n_max=context.app.state.config["log_n_best"])
+    add_background_tasks(background_tasks, context, request, flattened_response, "predict_proba")
     return response
 
 def process_request(request: List[PredictionRequest]):

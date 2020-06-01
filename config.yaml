@@ -53,6 +53,7 @@ enable_fluentd_logging: True # if you set this to true, you prob. also want to s
 fluentd_url: localhost # where is fluentd running?
 fluentd_port: 24224
 fluentd_base_log_name: machine-learning-microservice-template 
+log_n_best: 2 # if predict_proba, logs the n classes with highest probabilities
 
 
 ### API ###
