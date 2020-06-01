@@ -9,7 +9,7 @@ logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)
                     level=logging.DEBUG)
 
 
-class Logger():
+class MongoDBLogger():
     def __init__(self, client_url="mongodb", port=27017, db_name="ml_service", collection_name="prediction_logs", timezone:str="GMT"):
         
         logging.info(f'''Initialize Logger - Given Arguments:
