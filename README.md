@@ -96,5 +96,19 @@ In config.yaml --> set enable_logging to true
 restart the web service
 ```
 ### Build the runtime Image
+```
+cd dockerfiles/runtime-image/
+./build.sh
+docker tag <image name> <your docker repo>/<image name>
+docker push <your docker repo>/<image name>
+```
 
 ### Build the Service with Jenkins
+Start jenkins
+```
+cd getting-started
+./start_jenkins.sh
+```
+In Jenkins you have to create at least 2 pipelines, which connect to your SCM. One to train a ML model and another which takes this model and builds a web api around it.  
+For Script Path, add: **jenkins/train-model/Jenkinsfile** (model training) and **jenkins/build-image/Jenkinsfile**.  
+If you see permission errors when running these pipelines, try to disable Lightweight checkout.  
