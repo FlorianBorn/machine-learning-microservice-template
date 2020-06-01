@@ -1,9 +1,10 @@
 # Template Imports
 
 # Custom Imports
-import sklearn.datasets
-import seaborn as sns
+### Example:
+from sklearn.datasets import load_iris
 import pandas as pd
+### End Example
 
 class DataLoader():
     '''
@@ -23,6 +24,9 @@ class DataLoader():
             a dataframe containing all features and the target
         '''
         ### Example:
-        df_data = sns.load_dataset('iris')
+        #df_data = sns.load_dataset('iris')
+        data = load_iris()
+        df_data = pd.DataFrame(data.data, columns=data.feature_names)
+        df_data["species"] = data.target 
         ### End Example
         return df_data.iloc[:n_rows]
