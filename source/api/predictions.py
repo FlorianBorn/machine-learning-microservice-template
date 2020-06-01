@@ -1,8 +1,10 @@
 from fastapi import APIRouter, BackgroundTasks
 from source.api.models import PredictionRequest, PredictionResponse, ProbaPredictionResponse
+from source.api.helper import add_background_tasks
 from typing import List
 import pandas as pd
 from starlette.requests import Request
+from source.logging.helper import prepare_fluentd_msg, flatten_response
 
 router = APIRouter()
 
@@ -15,8 +17,7 @@ def predict(request: List[PredictionRequest], context: Request, background_tasks
     X = process_request(request)
     predictions = context.app.state.model.predict(X)
     response = [{"class_name": str(p)} for p in predictions] # convert prediction (array) to a list of dicts
-    if context.app.state.config['enable_logging'] == True:
-        background_tasks.add_task(context.app.state.logger.emit_many, response)
+    add_background_tasks(background_tasks, context, request, response, "predict")
     return response
 
 
@@ -31,8 +32,7 @@ def predict_proba(request: List[PredictionRequest], context: Request,  backgroun
     for p in predictions:
         d = {"class_names": classes, "probabilities": p}
         response.append(d)
-    if context.app.state.config['enable_logging'] == True:
-        background_tasks.add_task(context.app.state.logger.emit_many, response)
+    add_background_tasks(background_tasks, context, request, response, "predict_proba")
     return response
 
 def process_request(request: List[PredictionRequest]):
