@@ -12,7 +12,12 @@ def load_yaml():
 
 # Create class PredictionRequest dynamically from the models input parameters
 y = load_yaml()
-attributes = {f:'' for f in y["input_features"]}
+config = load_config()
+
+attributes = {}
+if len(config["ID_NAME"]) > 0:
+    attributes.update({config["ID_NAME"]: ''})
+attributes.update({f:'' for f in y["input_features"]})
 PredictionRequest = type("PredictionRequest", (BaseModel,), attributes) 
 
 class PredictionResponse(BaseModel):
