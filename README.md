@@ -113,10 +113,10 @@ docker push <your docker repo>/<image name>:<image tag>
 
 #### Enable logging
 This template comes with two logging functionalities, which both are disabled by default.  
-To enable logging via EFK, set 'enable_fluentd_logging' to True. The config file is located at the projects root directory.  
+To enable logging via EFK, set *enable_fluentd_logging* to True. The config file is located at the projects root directory.  
 This will log every prediction made by our model.  
 
-If you want to calculate your models performance later, you will likely need some IDs for your predicted entity. If you set the ID_NAME parameter to an arbitrary name, the web api adds this to its expected parameters and will also add its value to the log message. In addition each model object has a UUID and a timestamp for when it was created. These values are also always added to each log message.
+If you want to calculate your models performance later, you will likely need some IDs for your predicted entity. If you set the *ID_NAME* parameter to an arbitrary name, the web api adds this to its expected parameters and will also add its value to the log message. In addition each model object has a UUID and a timestamp for when it was created. These values are also always added to each log message.
 
 #### Build the project via Jenkins
 If you just started the Jenkins server, you probably have to configure it first. After this is done, you are ready to create the jenkins pipelines.
@@ -144,7 +144,7 @@ You can visit its built-in documentation under **localhost:8000/docs**
 By now you should have a running Jenkins server, a running EFK stack and your model wrapped in a running docker image.  
 If you go to **localhost:8000/docs** you can test your model. Make some dummy requests, so that there are some logs that you can view in Kibana.  
 
-The FluentD you deployed earlier is configured to send every message to an index of format *fluentd-YYYYMMDD*. So, if you test this on the 2th June 2020, the index where your log will go is called *fluentd-20200602*. Afterwards you should an index pattern in Kibana. This pattern could be *fluentd-\** or  *fluentd-20200602* for that specific index.  
+The FluentD you deployed earlier is configured to send every message to an index of format *fluentd-YYYYMMDD*. So, if you test this on the 2th June 2020, the index where your log will go is called *fluentd-20200602*. Afterwards you should create an index pattern in Kibana. This pattern could be *fluentd-\** or  *fluentd-20200602* for that specific index.  
 After you have created a pattern, you can watch you prediction logs under the Discover tab.
 ![alt text](docs/kibana-example.PNG "Kibana example logs")  
 *Example prediction logs* 
