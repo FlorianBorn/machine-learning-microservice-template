@@ -107,9 +107,8 @@ docker-compose up -d
 #### Build the runtime Image
 ```
 cd dockerfiles/runtime-image/
-./build.sh
-docker tag <image name> <your docker repo>/<image name>
-docker push <your docker repo>/<image name>
+./build.sh <your docker repo>/<image name> <image tag>
+docker push <your docker repo>/<image name>:<image tag>
 ```
 
 #### Enable logging
