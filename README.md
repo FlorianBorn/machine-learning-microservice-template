@@ -20,12 +20,11 @@ When it comes to deploying a machine learning model, it shouldn't matter if the 
 The second goal of this project is to build a reusable pipeline which deploys the model to production.
 
 ## ToDo's
-- [ ] add example / walkthrough
-- [ ] move the example code to a separate branch
+- [x] add example / walkthrough
 - [ ] rework ansible commands (remove passwords/ use vault)
 - [x] move config.yml from jenkins/ to projects root to serve as project configuration file
 - [x] add basic logging functionality
-- [ ] add utilities (e.g. for deploying the mongodb required for logging) 
+- [x] add utilities (e.g. for deploying the mongodb required for logging) 
 - [x] remove dummy files
 - [x] create pydantic classes dynamically from yaml files
 - [ ] add tests
