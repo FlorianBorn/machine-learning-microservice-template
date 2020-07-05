@@ -25,20 +25,20 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup():
     #await print("startup!")
-    load_dotenv(dotenv_path=Path(__file__).resolve().parent[1] / '.env')
+    load_dotenv(dotenv_path=str(Path(__file__).resolve().parents[1] / '.env'))
     with open("model_bin/model.pkl", "rb") as fp:
         app.state.model = pkl.load(fp)
     if enable_mongodb_logging:
         app.state.mongodb_logger = MongoDBLogger(
             client_url=os.environ['mongo_db_url'],
-            port=os.environ['mongo_db_port'],
+            port=int(os.environ['mongo_db_port']),
             db_name=os.environ['mongo_db_name'],
             collection_name=os.environ['mongodb_logging_collection_name'],
             timezone=os.environ['timezone'])
     if enable_fluentd_logging:
         app.state.fluentd_logger = FluentdLogger(
             fluentd_url=os.environ['fluentd_url'],
-            fluentd_port=os.environ['fluentd_port'],
+            fluentd_port=int(os.environ['fluentd_port']),
             fluentd_base_log_name=os.environ['fluentd_base_log_name'])
 
 @app.on_event("shutdown")

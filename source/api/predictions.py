@@ -26,7 +26,7 @@ def predict(request: List[PredictionRequest], context: Request, background_tasks
 
 @router.post("/api/proba_predictions", response_model=List[ProbaPredictionResponse])
 def predict_proba(request: List[PredictionRequest], context: Request,  background_tasks: BackgroundTasks):
-    load_dotenv(Path(__file__).resolve().parents[2] / '.env')
+    load_dotenv(dotenv_path=str(Path(__file__).resolve().parents[1] / '.env'))
     X = process_request(request)
     predictions = context.app.state.model.predict_proba(X).tolist()
 
@@ -37,7 +37,7 @@ def predict_proba(request: List[PredictionRequest], context: Request,  backgroun
         d = {"class_names": classes, "probabilities": p}
         response.append(d)
 
-    flattened_response = flatten_response(response, n_max=os.environ["fluentd_log_n_best"])
+    flattened_response = flatten_response(response, n_max=int(os.environ["fluentd_log_n_best"]))
     add_background_tasks(background_tasks, context, request, flattened_response, "predict_proba")
     return response
 

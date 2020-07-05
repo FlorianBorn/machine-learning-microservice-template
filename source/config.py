@@ -17,7 +17,7 @@ ID_NAME = "ID" # if set, an additional ID Parameter, which is used for logging, 
 
 #### Logging ####
 # MongoDB
-enable_mongodb_logging =  True # if true, you have to provide the following env parameters
+enable_mongodb_logging =  False # if true, you have to provide the following env parameters
 # mongo_db_name: ml-service # each service gets it's own mongodb Database, how should this db be named?
 # mongo_db_url: localhost 
 # mongo_db_port: 27017

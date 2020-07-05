@@ -10,7 +10,7 @@ def update_responses(responses: List[dict], new_fields: List[dict]):
 
 def prepare_fluentd_msg(app, requests: List[dict], responses: List[dict], flatten=False, n_max=3):
     p = Path(__file__).resolve().parents[2]
-    load_dotenv(dotenv_path= p / '.env')
+    load_dotenv(dotenv_path= str(p / '.env'))
     tmp_responses = responses.copy()  
     model_id = app.state.model.id
     model_creation_time = app.state.model.creation_time
