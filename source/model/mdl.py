@@ -5,6 +5,7 @@ import pickle as pkl
 import uuid
 from datetime import datetime
 from source.defaults import default_model_path, default_model_name
+from source.config import default_model_path
 from .train import train_model, Preprocessor, get_classes
 
 # Custom Imports
@@ -51,31 +52,39 @@ class Model():
         return self.model.predict_proba(processed_X)
 
     @classmethod
-    def load(cls, path: pathlib.Path=default_model_path, name: str=default_model_name):
+    def load(cls, path:str=None):
         '''
         Loads a Model Object from storage.
         '''
-        with open(str(path / name), "rb") as fp:
+        if path == None:
+            path = str(default_model_path)
+        with open(f"{path}", "rb") as fp:
             model = pkl.load(fp) # model must be pickle file
         return model
 
-    def load_model(self, path: pathlib.Path=default_model_path, name: str=default_model_name):
+    def load_model(self, path:str=None):
         '''
         Loads a trained model-Object (class Model) from path
         input:
             path: path where the model is stored
             name: the name of the actual model file (incl. file ending)
         '''
-        with open(str(path / name), "rb") as fp:
+        if path == None:
+            path = str(default_model_path)
+        with open(f"{path}", "rb") as fp:
             self.model = pkl.load(fp) # model must be pickle file
 
 
-    def export_model(self, path: pathlib.Path=default_model_path, name: str=default_model_name):
-        with open(str(path / name), "wb") as fp:
+    def export_model(self, path:str=None):
+        if path == None:
+            path = str(default_model_path)        
+        with open(f"{path}", "wb") as fp:
             pkl.dump(self.model, fp)
 
-    def export(self, path: pathlib.Path=default_model_path, name: str=default_model_name):
-        with open(str(path / name), "wb") as fp:
+    def export(self, path:str=None):
+        if path == None:
+            path = str(default_model_path)
+        with open(f"{path}", "wb") as fp:
             pkl.dump(self, fp)
 
     def get_str_timestamp(self):
