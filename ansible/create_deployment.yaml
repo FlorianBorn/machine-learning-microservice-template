@@ -1,0 +1,80 @@
+---
+- hosts: localhost
+  connection: local
+  name: machine learning microservice deployment
+  tasks:
+
+  #  - name: check if a trained model exists
+  #    # if model does not exist, train model
+  #    stat:
+  #        path: ~/deployments/machine-learning-microservice-template/model_bin/model.pkl # required. The full path of the file/object to get the facts of.
+  #        get_checksum: yes # not required. Whether to return a checksum of the file (default sha1).
+  #        follow: no # not required. Whether to follow symlinks.
+  #        checksum_algorithm: md5 # not required. choices: md5;sha1;sha224;sha256;sha384;sha512. Algorithm to determine checksum of file. Will throw an error if the host is unable to use specified algorithm.,The remote host has to support the hashing method specified, C(md5) can be unavailable if the host is FIPS-140 compliant.
+  #        get_mime: yes # not required. Use file magic and return data about the nature of the file. this uses the 'file' utility found on most Linux/Unix systems.,This will add both `mime_type` and 'charset' fields to the return, if possible.,In 2.3 this option changed from 'mime' to 'get_mime' and the default changed to 'Yes'.
+  #        get_md5: no # not required. Whether to return the md5 sum of the file.,Will return None if not a regular file or if we're unable to use md5 (Common for FIPS-140 compliant systems).,The default of this option changed from C(yes) to C(no) in Ansible 2.5 and will be removed altogether in Ansible 2.9.,Use C(get_checksum=true) with C(checksum_algorithm=md5) to return an md5 hash under the C(checksum) return value.
+  #        get_attributes: yes # not required. Get file attributes using lsattr tool if present.
+  #    register: stat_result
+    
+    - name: train a model if no model exists already
+      shell:
+          cmd: python ~/projects/machine-learning-microservice-template/jenkins/train-model/train.py
+          warn: yes # not required. if command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false.
+          creates: ~/deployments/machine-learning-microservice-template/model_bin/model.pkl # not required. a filename, when it already exists, this step will B(not) be run.
+          #executable: undefined # not required. change the shell used to execute the command. Should be an absolute path to the executable.
+          #chdir: undefined # not required. cd into this directory before running the command
+      # when: not state_result.stat.exists
+
+### ab hier kann die Arbeit auf dem Remote Host stattfinden ###
+
+    - name: create model destination path
+      file:
+        path: ~/deployments/machine-learning-microservice-template/model_bin/
+        state: directory
+
+    - name: create .env destination path
+      file:
+        path: ~/deployments/machine-learning-microservice-template/
+        state: directory
+
+    - name: copy model to destination
+      copy:
+          dest: ~/deployments/machine-learning-microservice-template/model_bin/model.pkl # required. Remote absolute path where the file should be copied to. If I(src) is a directory, this must be a directory too. If I(dest) is a nonexistent path and if either I(dest) ends with "/" or I(src) is a directory, I(dest) is created. If I(src) and I(dest) are files, the parent directory of I(dest) isn't created: the task fails if it doesn't already exist.
+          src: ~/projects/machine-learning-microservice-template/model_bin/model.pkl # not required. Local path to a file to copy to the remote server; can be absolute or relative. If path is a directory, it is copied recursively. In this case, if path ends with "/", only inside contents of that directory are copied to destination. Otherwise, if it does not end with "/", the directory itself with all contents is copied. This behavior is similar to Rsync.
+          directory_mode: undefined # not required. When doing a recursive copy set the mode for the directories. If this is not set we will use the system defaults. The mode is only set on directories which are newly created, and will not affect those that already existed.
+          force: yes # not required. the default is C(yes), which will replace the remote file when contents are different than the source. If C(no), the file will only be transferred if the destination does not exist.
+          remote_src: yes # not required. If C(no), it will search for I(src) at originating/master machine.,If C(yes) it will go to the remote/target machine for the I(src). Default is C(no).,Currently I(remote_src) does not support recursive copying.,I(remote_src) only works with C(mode=preserve) as of version 2.6.
+         
+    - name: copy .env to destination
+      copy:
+          dest: ~/deployments/machine-learning-microservice-template/.env # required. Remote absolute path where the file should be copied to. If I(src) is a directory, this must be a directory too. If I(dest) is a nonexistent path and if either I(dest) ends with "/" or I(src) is a directory, I(dest) is created. If I(src) and I(dest) are files, the parent directory of I(dest) isn't created: the task fails if it doesn't already exist.
+          src: ~/projects/machine-learning-microservice-template/.env # not required. Local path to a file to copy to the remote server; can be absolute or relative. If path is a directory, it is copied recursively. In this case, if path ends with "/", only inside contents of that directory are copied to destination. Otherwise, if it does not end with "/", the directory itself with all contents is copied. This behavior is similar to Rsync.
+          directory_mode: undefined # not required. When doing a recursive copy set the mode for the directories. If this is not set we will use the system defaults. The mode is only set on directories which are newly created, and will not affect those that already existed.
+          force: yes # not required. the default is C(yes), which will replace the remote file when contents are different than the source. If C(no), the file will only be transferred if the destination does not exist.
+          remote_src: yes # not required. If C(no), it will search for I(src) at originating/master machine.,If C(yes) it will go to the remote/target machine for the I(src). Default is C(no).,Currently I(remote_src) does not support recursive copying.,I(remote_src) only works with C(mode=preserve) as of version 2.6.      
+
+    - name: start microservice # image must exist
+      docker_container:
+          name: ml-microservice # required. Assign a name to a new container or match an existing container.,When identifying an existing container name may be a name or a long or short container ID.
+          image: ml_template_production_env:0.0.1 # not required. Repository path and tag used to create the container. If an image is not found or pull is true, the image will be pulled from the registry. If no tag is included, 'latest' will be used.
+          docker_host: unix://var/run/docker.sock # not required. The URL or Unix socket path used to connect to the Docker API. To connect to a remote host, provide the TCP connection string. For example, 'tcp://192.0.2.23:2376'. If TLS is used to encrypt the connection, the module will automatically replace 'tcp' in the connection URL with 'https'.,If the value is not specified in the task, the value of environment variable C(DOCKER_HOST) will be used instead. If the environment variable is not set, the default value will be used.
+          force_kill: yes # not required. Use the kill command when stopping a running container.
+          recreate: yes
+          detach: true # not required. Enable detached mode to leave the container running in background. If disabled, the task will reflect the status of the container run (failed if the command failed).
+          published_ports: 8000:8000 # not required. List of ports to publish from the container to the host.,Use docker CLI syntax: C(8000), C(9000:8000), or C(0.0.0.0:9000:8000), where 8000 is a container port, 9000 is a host port, and 0.0.0.0 is a host interface.,Container ports must be exposed either in the Dockerfile or via the C(expose) option.,A value of all will publish all exposed container ports to random host ports, ignoring any other mappings.,If C(networks) parameter is provided, will inspect each network to see if there exists a bridge network with optional parameter com.docker.network.bridge.host_binding_ipv4. If such a network is found, then published ports where no host IP address is specified will be bound to the host IP pointed to by com.docker.network.bridge.host_binding_ipv4. Note that the first bridge network with a com.docker.network.bridge.host_binding_ipv4 value encountered in the list of C(networks) is the one that will be used.
+          pull: no # not required. If true, always pull the latest version of an image. Otherwise, will only pull an image when missing.
+          timeout: 60 # not required. The maximum amount of time in seconds to wait on a response from the API.,If the value is not specified in the task, the value of environment variable C(DOCKER_TIMEOUT) will be used instead. If the environment variable is not set, the default value will be used.
+          env_file: ~/projects/machine-learning-microservice-template/.env # not required. Path to a file, present on the target, containing environment variables I(FOO=BAR).,If variable also present in C(env), then C(env) value will override.
+          volumes:
+            - ~/deployments/machine-learning-microservice-template/model_bin/model.pkl:/microservice/model_bin/model.pkl # not required. List of volumes to mount within the container.,Use docker CLI-style syntax: C(/host:/container[:mode]),You can specify a read mode for the mount with either C(ro) or C(rw).,SELinux hosts can additionally use C(z) or C(Z) to use a shared or private label for the volume.
+            - ~/deployments/machine-learning-microservice-template/.env:/microservice/.env
+
+    - name: show working dir
+      debug:
+          msg: "{{ lookup('env', 'PWD') }}" # not required. The customized message that is printed. If omitted, prints a generic message.
+          #var: undefined # not required. A variable name to debug.  Mutually exclusive with the 'msg' option.
+          verbosity: 0 # not required. A number that controls when the debug is run, if you set to 3 it will only run debug when -vvv or above
+
+# if there is a model: skip; else: train one
+
+# start container

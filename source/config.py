@@ -1,3 +1,5 @@
+from pathlib import Path
+
 ### API & main ###
 
 # List the names of the features your model expects during training and prediction
@@ -32,7 +34,8 @@ enable_fluentd_logging =  True # if you set this to true, you prob. also want to
 # fluentd_log_n_best: 2 # if predict_proba, logs the n classes with highest probabilities
 
 #### Model ####
-model_path = "model_bin" # the folder where the trained model should be stored
+default_model_path = Path(__file__).resolve().parents[1] / "model_bin/model.pkl" # the folder where the trained model should be stored
+
 model_name = "model.pkl" # the name the trained model will have (.pkl is mandatory)
 
 
