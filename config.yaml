@@ -1,63 +1,63 @@
 ---
 ### general ### 
-repository: n02291 # The name of the docker Repository to use.
-registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
+#repository: n02291 # The name of the docker Repository to use.
+#registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
 
-runtime_image_name: ml_template_runtime_env # The image name of the runtime image which Jenkins uses to run used within the Jenkins pipelines
-runtime_image_tag: 0.2.0 
+#runtime_image_name: ml_template_runtime_env # The image name of the runtime image which Jenkins uses to run used within the Jenkins pipelines
+#runtime_image_tag: 0.2.0 
 
-production_image_name: ml_template_production_env # The name you want the final image to have
-production_image_tag: 0.0.1 
+#production_image_name: ml_template_production_env # The name you want the final image to have
+#production_image_tag: 0.0.1 
 
-docker_socket_path: "/var/run/docker.sock" # default linux path
-model_path: "model_bin" # the folder where the trained model should be stored
-model_name: "model.pkl" # the name the trained model will have (.pkl is mandatory)
+#docker_socket_path: "/var/run/docker.sock" # default linux path
+#model_path: "model_bin" # the folder where the trained model should be stored
+#model_name: "model.pkl" # the name the trained model will have (.pkl is mandatory)
 
-github_project_name: "machine-learning-microservice-template"
+#github_project_name: "machine-learning-microservice-template"
 
 prediction_test_case_path: tests/prediction/example_classification1.json # the path incl. the filename to a given dummy request to test your model 
 
 ### Jenkins ###
-docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
-scm_credentials_id: github # The ID of the User used to access your SCM. The credentials of this user must be provided by Jenkins!
+#docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
+#scm_credentials_id: github # The ID of the User used to access your SCM. The credentials of this user must be provided by Jenkins!
 
 ### Helm ###
 # Deployment
-deployment_name: ml-microservice # how should the k8s deployment be named
-deployment_label: ml-microservice # what label you want to give to the deployment
+#deployment_name: ml-microservice # how should the k8s deployment be named
+#deployment_label: ml-microservice # what label you want to give to the deployment
 
-container_name: ml-microservice # How should the containers be named within k8s 
-image_name: prod_ml_microservice
-image_tag: 0.0.1
-container_port: 8000 # the port which should be exposed by the container (the port where the webservice is running)
+#container_name: ml-microservice # How should the containers be named within k8s 
+#image_name: prod_ml_microservice
+#image_tag: 0.0.1
+#container_port: 8000 # the port which should be exposed by the container (the port where the webservice is running)
 
-replicas: 2 
+#replicas: 2 
 
 # Service
-service_name: ml-service
-service_type: NodePort
-service_port: 8000 # the port where the app is running
-service_node_port: 30000 # the port which is exposed publicly
+#service_name: ml-service
+#service_type: NodePort
+#service_port: 8000 # the port where the app is running
+#service_node_port: 30000 # the port which is exposed publicly
 
 ### Logging ###
 # MongoDB
-enable_logging: False
-mongo_db_name: ml-service # each service gets it's own mongodb Database, how should this db be named?
-mongo_db_url: localhost 
-mongo_db_port: 27017
-logging_collection_name: prediction_logs
-timezone: Europe/Berlin # for possible values see: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+#enable_mongodb_logging: True # if true, you have to provide the following env parameters
+# mongo_db_name: ml-service # each service gets it's own mongodb Database, how should this db be named?
+# mongo_db_url: localhost 
+# mongo_db_port: 27017
+# mongodb_logging_collection_name: prediction_logs
+# timezone: Europe/Berlin # for possible values see: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
 
 # EFK-Stack
-enable_fluentd_logging: True # if you set this to true, you prob. also want to set ID_NAME 
-fluentd_url: localhost # where is fluentd running?
-fluentd_port: 24224
-fluentd_base_log_name: machine-learning-microservice-template 
-log_n_best: 2 # if predict_proba, logs the n classes with highest probabilities
+#enable_fluentd_logging: True # if you set this to true, you prob. also want to set ID_NAME, set also the following env params
+# fluentd_url: localhost # where is fluentd running?
+# fluentd_port: 24224
+# fluentd_base_log_name: machine-learning-microservice-template 
+# fluentd_log_n_best: 2 # if predict_proba, logs the n classes with highest probabilities
 
 
 ### API ###
-ID_NAME: ID # if set, an additional ID Parameter, which is used for logging, can be passed during requests, can be empty
+#ID_NAME: ID # if set, an additional ID Parameter, which is used for logging, can be passed during requests, can be empty
 
 ### Source ###
 

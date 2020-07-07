@@ -1,24 +1,28 @@
 from typing import List
-from source.helper import load_config
+from source.config import ID_NAME
+from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 def update_responses(responses: List[dict], new_fields: List[dict]):
     return [dict(**response, **new) for response, new in zip(responses, new_fields)]
 
 
 def prepare_fluentd_msg(app, requests: List[dict], responses: List[dict], flatten=False, n_max=3):
-    tmp_responses = responses.copy()
-    config = load_config()
+    p = Path(__file__).resolve().parents[2]
+    load_dotenv(dotenv_path= str(p / '.env'))
+    tmp_responses = responses.copy()  
     model_id = app.state.model.id
     model_creation_time = app.state.model.creation_time
     new_fields = [{
         "model_id": model_id, 
         "model_creation_time": model_creation_time}
         for _ in tmp_responses]
-    if len(config["ID_NAME"]) > 0:
+    if len(ID_NAME) > 0:
         for d, r in zip(new_fields, requests):
-            d.update({config["ID_NAME"]: r.dict()[config["ID_NAME"]]})
+            d.update({ID_NAME: r.dict()[ID_NAME]})
     if flatten:
-        tmp_responses = flatten_response(responses, n_max=config["log_n_best"])
+        tmp_responses = flatten_response(responses, n_max=os.environ["fluentd_log_n_best"])
     return update_responses(tmp_responses, new_fields)
 
 
