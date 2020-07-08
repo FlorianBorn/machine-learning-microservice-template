@@ -1,4 +1,5 @@
 # Template Imports
+import argparse
 from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).resolve().parents[2])) # project's root
@@ -10,6 +11,9 @@ from source.data.data_loader import DataLoader
 # ...
 
 # Command Line Arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("--model_path", type=str, help="The full path and file name, where you want to export the trained model to. E.g. /foo/model.pkl")
+args = parser.parse_args()
 # ToDo - Allow passing cmd line args, e.g. for specifying the path to store the model
 
 logging.basicConfig(format='%(asctime)s, %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
@@ -27,4 +31,4 @@ model = Model()
 model.train(df_data)
 
 # Store trained model
-model.export()
+model.export(args.model_path)
