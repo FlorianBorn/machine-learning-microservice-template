@@ -8,6 +8,7 @@ pipeline{
                 echo "========Load Build Configs========"
                 script {
                     def build_config = readYaml(file: "config/build.yaml")
+                    echo "${build_config}"
                 }
                 echo "${build_config}"
 
