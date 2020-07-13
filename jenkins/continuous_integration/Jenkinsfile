@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label "node"
+        label "master"
     }
     stages{
         stage ("Load Build Configs") {
