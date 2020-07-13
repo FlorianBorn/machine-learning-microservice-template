@@ -1,5 +1,5 @@
 node {
-    def build_config = readYaml(file: "config/build.yaml")
+    build_config = readYaml(file: "config/build.yaml")
 }
 
 
