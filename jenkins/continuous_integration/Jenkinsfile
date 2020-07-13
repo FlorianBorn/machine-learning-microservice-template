@@ -33,7 +33,7 @@ pipeline{
             }
             steps{
                 echo "========Run Unit Tests========"
-
+                sh "pytest ."
             }
             post{
                 always{
