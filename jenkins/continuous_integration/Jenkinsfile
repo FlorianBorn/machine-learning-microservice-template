@@ -14,6 +14,8 @@ pipeline{
                 script {
                     build_config = readYaml(file: "config/build.yaml")
                     echo "${build_config}"
+                    echo "${build_config['docker_runtime_image_name']}"
+                    runtime_image  ="${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
                 }
                 echo "${build_config}"
 
