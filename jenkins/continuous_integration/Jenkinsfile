@@ -1,5 +1,5 @@
 node {
-    build_config = readYaml(file: "config/build.yaml")
+    //def build_config = readYaml(file: "config/build.yaml")
 }
 
 
@@ -8,11 +8,16 @@ pipeline{
         label "master"
     }
     stages{
-        stage("Echo") {
+        stage ("Load Build Configs") {
             steps {
+                echo "========Load Build Configs========"
+                script {
+                    build_config = readYaml(file: "config/build.yaml")
+                    echo "${build_config}"
+                }
                 echo "${build_config}"
-            }
 
+            }
         }
 /*
         stage("Run Unit Tests"){
