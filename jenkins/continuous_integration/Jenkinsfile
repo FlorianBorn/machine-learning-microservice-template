@@ -26,7 +26,7 @@ pipeline{
 
         stage("Run Unit Tests"){
             agent {
-                docker { image ""
+                docker { image "${runtime_image}" }
             }
             steps{
                 echo "========Run Unit Tests========"
