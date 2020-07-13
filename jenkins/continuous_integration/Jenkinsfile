@@ -20,7 +20,7 @@ pipeline{
 
             }
             environment {
-                def runtime_image = ${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}
+                def runtime_image = "${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
             }
         }
 
