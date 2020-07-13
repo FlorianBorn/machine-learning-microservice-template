@@ -24,7 +24,7 @@ pipeline{
 
         stage("Run Unit Tests"){
             environment {
-                def runtime_image = "${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
+                runtime_image = "${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
             }
             agent {
                 docker { image "${runtime_image}" }
