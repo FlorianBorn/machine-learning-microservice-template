@@ -1,0 +1,39 @@
+#####################################################################################
+#                                                                                   #
+#    This file contains parameters, which are required to BUILD the application     #
+#                                                                                   #
+#####################################################################################
+
+github_project_name: "machine-learning-microservice-template"
+
+docker_repository: n02291 # The name of the docker Repository to use.
+docker_registry: https://index.docker.io/v1/ # The URL of the Docker Registry to use.
+
+docker_runtime_image_name: ml_template_runtime # The image name of the runtime image which Jenkins uses to run used within the Jenkins pipelines
+docker_runtime_image_tag: latest
+
+docker_production_image_name: ml_template_production # The name you want the final image to have
+docker_production_image_tag: 0.0.1 
+
+docker_socket_path: "/var/run/docker.sock" # default linux path
+
+### Jenkins ###
+jenkins_docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
+jenkind_scm_credentials_id: github # The ID of the User used to access your SCM. The credentials of this user must be provided by Jenkins!
+
+### Helm ###
+# Deployment
+k8s_deployment_name: ml-microservice # how should the k8s deployment be named
+k8s_deployment_label: ml-microservice # what label you want to give to the deployment
+k8s_container_name: ml-microservice # How should the containers be named within k8s 
+k8s_image_name: prod_ml_microservice
+k8s_image_tag: 0.0.1
+k8s_container_port: 8000 # the port which should be exposed by the container (the port where the webservice is running)
+k8s_replicas: 2 
+
+# Service
+k8s_service_name: ml-service
+k8s_service_type: NodePort
+k8s_service_port: 8000 # the port where the app is running
+k8s_service_node_port: 30000 # the port which is exposed publicly
+

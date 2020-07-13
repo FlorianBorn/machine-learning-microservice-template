@@ -1,0 +1,49 @@
+pipeline{
+    agent{
+        label "node"
+    }
+    stages{
+        stage {"Load Build Configs"} {
+            steps {
+                echo "========Load Build Configs========"
+                script {
+                    def build_config = readYaml(file: "config/build.yaml")
+                }
+                echo build_config
+
+            }
+        }
+
+        stage("Run Unit Tests"){
+            agent {
+                docker { image}
+            }
+            steps{
+                echo "========Run Unit Tests========"
+
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
