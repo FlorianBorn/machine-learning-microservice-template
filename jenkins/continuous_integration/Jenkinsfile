@@ -17,12 +17,16 @@ pipeline{
                 }
                 echo "${build_config}"
 
+
+            }
+            environment {
+                def runtime_image = ${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}
             }
         }
-/*
+
         stage("Run Unit Tests"){
             agent {
-                docker { image }
+                docker { image ""
             }
             steps{
                 echo "========Run Unit Tests========"
