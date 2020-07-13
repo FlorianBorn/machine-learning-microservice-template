@@ -3,7 +3,7 @@ pipeline{
         label "node"
     }
     stages{
-        stage {"Load Build Configs"} {
+        stage ("Load Build Configs") {
             steps {
                 echo "========Load Build Configs========"
                 script {
