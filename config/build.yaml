@@ -20,6 +20,7 @@ docker_socket_path: "/var/run/docker.sock" # default linux path
 ### Jenkins ###
 jenkins_docker_credentials_id: docker # The ID of the User used to access the Docker Registry. The credentials of this user must be provided by Jenkins!
 jenkind_scm_credentials_id: github # The ID of the User used to access your SCM. The credentials of this user must be provided by Jenkins!
+jenkins_ansible_vault_id: ansible-vault
 
 ### Helm ###
 # Deployment

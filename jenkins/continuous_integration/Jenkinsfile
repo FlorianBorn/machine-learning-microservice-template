@@ -4,13 +4,16 @@ node {
 
 
 pipeline{
+    env_file_name  = "env.sample"
+
+
     agent{
         label "master"
     }
     stages{
-        stage ("Load Build Configs") {
+        stage ("Load Configs") {
             steps {
-                echo "========Load Build Configs========"
+                echo "========Load Configs========"
                 script {
                     build_config = readYaml(file: "config/build.yaml")
                     echo "${build_config}"
@@ -18,10 +21,16 @@ pipeline{
                     runtime_image  ="${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
                 }
                 echo "${build_config}"
-
+                ansibleVault(action: "decrypt", input: "config/${env_file_name}", vaultCredentialsId: "${build_config.jenkins_ansible_vault_id}")
+                sh "chmod 644 config/${env_file_name}"
+            }
+            post{
+                always{
+                    echo "========encrypt .env file ========"
+                    ansibleVault(action: "encrypt", input: "config/${env_file_name}", vaultCredentialsId: "${build_config.jenkins_ansible_vault_id}")
+                }
 
             }
-
         }
 
         stage("Run Unit Tests"){
@@ -29,7 +38,10 @@ pipeline{
                 runtime_image = "${build_config['docker_runtime_image_name']}:${build_config['docker_runtime_image_tag']}"
             }
             agent {
-                docker { image "${runtime_image}" }
+                docker { 
+                    image "${runtime_image}"
+                    args "--env-file config/${env_file_name}"
+                }
             }
             steps{
                 echo "========Run Unit Tests========"
