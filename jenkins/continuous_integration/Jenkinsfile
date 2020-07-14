@@ -1,11 +1,10 @@
 node {
     //def build_config = readYaml(file: "config/build.yaml")
+    env_file_name  = "env.sample"
 }
 
 
 pipeline{
-    env_file_name  = "env.sample"
-
 
     agent{
         label "master"
