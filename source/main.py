@@ -14,7 +14,6 @@ import pickle as pkl
 import yaml
 from source.api.models import PredictionRequest, PredictionResponse, ProbaPredictionResponse
 from source.api import ping, predictions
-from source.config import enable_fluentd_logging, enable_mongodb_logging
 from dotenv import load_dotenv
 from pathlib import Path
 import os
@@ -28,14 +27,14 @@ async def startup():
     load_dotenv(dotenv_path=str(Path(__file__).resolve().parents[1] / '.env'))
     with open("model_bin/model.pkl", "rb") as fp:
         app.state.model = pkl.load(fp)
-    if enable_mongodb_logging:
+    if os.environ["enable_mongodb_logging"] == "True":
         app.state.mongodb_logger = MongoDBLogger(
             client_url=os.environ['mongo_db_url'],
             port=int(os.environ['mongo_db_port']),
             db_name=os.environ['mongo_db_name'],
             collection_name=os.environ['mongodb_logging_collection_name'],
             timezone=os.environ['timezone'])
-    if enable_fluentd_logging:
+    if os.environ["enable_fluentd_logging"] == "True":
         app.state.fluentd_logger = FluentdLogger(
             fluentd_url=os.environ['fluentd_url'],
             fluentd_port=int(os.environ['fluentd_port']),
