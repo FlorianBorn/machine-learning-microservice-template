@@ -2,7 +2,7 @@ FROM python:3.8.2-slim
 
 COPY requirements*.txt /microservice/
 
-RUN pip install -r /microservice/requirements.txt -r /microservice/requirements_additional.txt
+RUN pip install -r /microservice/requirements.txt
 
 COPY source /microservice/source
 COPY config.yaml /microservice/
