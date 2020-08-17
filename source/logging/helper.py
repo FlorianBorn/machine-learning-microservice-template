@@ -1,5 +1,5 @@
 from typing import List
-from source.config import ID_NAME
+from source.features import ID_NAME
 from pathlib import Path
 from dotenv import load_dotenv
 import os

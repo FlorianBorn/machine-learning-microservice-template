@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from pathlib import Path
 from typing import List
-from source.config import input_features, ID_NAME
+from source.features import input_features, ID_NAME
 import yaml
 
 # Create class PredictionRequest dynamically from the models input parameters
