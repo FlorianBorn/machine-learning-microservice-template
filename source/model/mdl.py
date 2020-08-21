@@ -5,6 +5,7 @@ import pickle as pkl
 import uuid
 from datetime import datetime
 from source.defaults import default_model_path, default_model_name
+from source.features import task
 from .train import train_model, Preprocessor, get_classes
 
 # Custom Imports
@@ -40,7 +41,8 @@ class Model():
 
         # fitting
         self.model = train_model(processed_X, processed_y)
-        self.classes = get_classes(self.model)
+        if task == "classification":
+            self.classes = get_classes(self.model)
 
     def predict(self, X: pd.DataFrame):
         processed_X = self.preprocessor.process_X(X)

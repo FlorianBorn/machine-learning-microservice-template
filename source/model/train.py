@@ -22,7 +22,7 @@ class Preprocessor():
         '''
         ### Example:
         X = data.drop(target_label, axis=1)
-        y = pd.DataFrame(data["species"])
+        y = pd.DataFrame(data[target_label])
         ### End Example
         return X, y
 

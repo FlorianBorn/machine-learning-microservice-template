@@ -21,8 +21,5 @@ ID_NAME = "ID" # if set, an additional ID Parameter, which is used for logging, 
 
 
 #### Model ####
-#default_model_path = Path(__file__).resolve().parents[1] / "model_bin/model.pkl" # the folder where the trained model should be stored
-
-#model_name = "model.pkl" # the name the trained model will have (.pkl is mandatory)
-
+task = "classification"  # one of [classification, regression]
 
