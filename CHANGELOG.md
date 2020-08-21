@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/FlorianBorn/machine-learning-microservice-template/compare/v1.0.0...v1.1.0) (2020-08-21)
+
+
+### Bug Fixes
+
+* minor fix ([1eadaee](https://github.com/FlorianBorn/machine-learning-microservice-template/commit/1eadaee5d357795135ea5d777b00b1bae7acece4))
+
+
+### Features
+
+* add 'task' variable to source.features.yaml to being able to modify the model and the api according to the given task ([2b231ff](https://github.com/FlorianBorn/machine-learning-microservice-template/commit/2b231ff0903cad8df92d2695ff308c1de08f3fa0))
+
 # 1.0.0 (2020-07-07)
 
 
