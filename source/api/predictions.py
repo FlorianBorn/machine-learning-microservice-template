@@ -40,7 +40,7 @@ if task == "classification":
         predictions = request.app.state.model.predict_proba(X).tolist()
 
         # prepare response
-        classes = request.app.state.model.classes
+        classes = [str(class_) for class_ in request.app.state.model.classes] # convert classes to string, if they are not already strings
         response = []
         for p in predictions:
             d = {"class_names": classes, "probabilities": p}
