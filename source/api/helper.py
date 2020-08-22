@@ -9,3 +9,11 @@ def add_background_tasks(background_tasks, context, request: List[dict], respons
     if os.environ["enable_fluentd_logging"] == "True":
         logs = prepare_fluentd_msg(context.app, request, response)
         background_tasks.add_task(context.app.state.fluentd_logger.emit_many, event_name, msgs=logs)
+
+
+def log_to_mongodb(background_tasks, request, response: List[dict]):
+    background_tasks.add_task(request.app.state.mongodb_logger.emit_many, response)
+
+def log_to_efk(background_tasks, request, response: List[dict], event_name: str):
+    logs = prepare_fluentd_msg(request.app, request, response)
+    background_tasks.add_task(request.app.state.fluentd_logger.emit_many, event_name, msgs=logs)

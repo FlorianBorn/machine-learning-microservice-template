@@ -41,7 +41,7 @@ class Model():
 
         # fitting
         self.model = train_model(processed_X, processed_y)
-        if task == "classification":
+        if task == "classification": # if task is classification, get_classes function must be implemented (see train.py)!
             self.classes = get_classes(self.model)
 
     def predict(self, X: pd.DataFrame):
