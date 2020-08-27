@@ -8,7 +8,9 @@ import yaml
 attributes = {}
 if len(ID_NAME) > 0:
     attributes.update({ID_NAME: ''})
-attributes.update({f:'' for f in input_features})
+# To add the correct type: add a dict type_to_dummy (e.g. {"int": 0, "float": 0.0})
+# in featury.py change the features to dict (e.g {"sepal_length": str (or "string")})
+attributes.update({f:'' for f in input_features}) 
 PredictionRequest = type("PredictionRequest", (BaseModel,), attributes) 
 
 class PredictionResponse(BaseModel):
