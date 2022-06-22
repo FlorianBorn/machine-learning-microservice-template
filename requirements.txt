@@ -1,7 +1,7 @@
 requests==2.23.0
 docker==4.2.0
 fastapi==0.54.1
-numpy==1.18.3
+numpy==1.22.0
 pandas==1.0.3
 pydantic==1.5.1
 pymongo==3.10.1
